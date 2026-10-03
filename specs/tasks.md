@@ -13,7 +13,7 @@
   - Done when: missing/empty `GEMINI_API_KEY` raises a clear error naming the variable; defaults match D7.
 - [x] **T5** `app/prompts.py` — *R5, R6, R7, R8* · design D5
   - Done when: the prompt covers classification, the six fields, normalization, null-over-guess, banded confidence, and document-as-data.
-- [ ] **T6** `app/gemini_client.py` (async multimodal call) — *R1, R5-R8, R11* · design D4
+- [x] **T6** `app/gemini_client.py` (async multimodal call) — *R1, R5-R8, R11* · design D4
   - Done when: a call returns a validated `ExtractionResult`; every failure mode in D4 surfaces as `GeminiExtractionError`.
 - [ ] **T7** `app/extraction_service.py` (orchestration + confidence aggregation) — *R1, R8, R9* · design D3
   - Done when: `extract_document()` returns an `ExtractResponse` whose computed fields follow D3 exactly.
