@@ -121,7 +121,7 @@ app/
   gemini_client.py       async multimodal call, error wrapping              (D4)
   extraction_service.py  orchestration, confidence aggregation              (D3)
 samples/README.md        how to source sample documents (synthetic/public only)
-tests/test_schemas.py    schema tests, no network
+tests/test_schemas.py    schema tests, no network (local only, git-ignored)
 specs/                   requirements.md, design.md, tasks.md
 ```
 

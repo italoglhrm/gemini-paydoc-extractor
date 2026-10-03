@@ -19,8 +19,9 @@
   - Done when: `extract_document()` returns an `ExtractResponse` whose computed fields follow D3 exactly.
 - [x] **T8** `app/main.py` (`/extract`, `/health`, validation, error mapping) — *R1-R4, R10, R11, R12* · design D6
   - Done when: each status code in D6 is produced by the condition D6 names, and the app refuses to boot without a key.
-- [ ] **T9** `tests/test_schemas.py` (schema-only, no live Gemini calls) — *R5-R9*
+- [x] **T9** `tests/test_schemas.py` (schema-only, no live Gemini calls) — *R5-R9*
   - Done when: `pytest` passes offline and covers enum values, nullability, confidence bounds, blank-string handling and the schema conversion.
+  - Kept local: `tests/` is git-ignored, so this file is not part of the repository.
 - [ ] **T10** User sources sample documents into `samples/` + `samples/README.md`
   - Synthetic or public documents only. No real company or personal data.
 - [ ] **T11** Manual end-to-end verification (curl / Swagger UI against samples) — *R1-R4, R10-R12*
