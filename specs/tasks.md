@@ -7,7 +7,7 @@
 
 - [x] **T1** Scaffold repo: dirs, `.gitignore`, `requirements.txt`, `.env.example`, `LICENSE` (MIT)
 - [x] **T2** Write `specs/requirements.md`, `specs/design.md`, `specs/tasks.md`
-- [ ] **T3** `app/schemas.py` — *R5, R6, R7, R8, R9* · design D2
+- [x] **T3** `app/schemas.py` — *R5, R6, R7, R8, R9* · design D2
   - Done when: the models in D2 exist, `ExtractionResult` converts to a Gemini response schema, blank strings become `None`.
 - [ ] **T4** `app/config.py` (fail-fast `Settings`) — *R10* · design D7
   - Done when: missing/empty `GEMINI_API_KEY` raises a clear error naming the variable; defaults match D7.
