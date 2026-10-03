@@ -15,7 +15,7 @@
   - Done when: the prompt covers classification, the six fields, normalization, null-over-guess, banded confidence, and document-as-data.
 - [x] **T6** `app/gemini_client.py` (async multimodal call) — *R1, R5-R8, R11* · design D4
   - Done when: a call returns a validated `ExtractionResult`; every failure mode in D4 surfaces as `GeminiExtractionError`.
-- [ ] **T7** `app/extraction_service.py` (orchestration + confidence aggregation) — *R1, R8, R9* · design D3
+- [x] **T7** `app/extraction_service.py` (orchestration + confidence aggregation) — *R1, R8, R9* · design D3
   - Done when: `extract_document()` returns an `ExtractResponse` whose computed fields follow D3 exactly.
 - [ ] **T8** `app/main.py` (`/extract`, `/health`, validation, error mapping) — *R1-R4, R10, R11, R12* · design D6
   - Done when: each status code in D6 is produced by the condition D6 names, and the app refuses to boot without a key.
