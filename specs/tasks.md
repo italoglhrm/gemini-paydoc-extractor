@@ -28,6 +28,7 @@
 - [ ] **T11** Manual end-to-end verification (curl / Swagger UI against samples) — *R1-R4, R10-R12*
   - Positive: `/health`, `/extract` with a PDF and an image.
   - Negative: `.txt` → 415, empty file → 400, oversized → 413, unset key → app fails to boot, bad key → 502.
+  - Verified so far without a real key: a missing or blank key stops the app from booting; `.txt` → 415, empty file → 400 and a bad key → 502 against a running server; oversized → 413 through an in-process test client. Still open: the positive paths, which need a real `GEMINI_API_KEY` and the samples from T10.
 - [ ] **T12** Full `README.md` (pitch, architecture, setup, usage, limitations, roadmap)
 
 ## Requirement coverage
