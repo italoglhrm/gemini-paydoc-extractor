@@ -24,6 +24,7 @@
   - Kept local: `tests/` is git-ignored, so this file is not part of the repository.
 - [ ] **T10** User sources sample documents into `samples/` + `samples/README.md`
   - Synthetic or public documents only. No real company or personal data.
+  - `samples/README.md` is written (rules and a suggested set). The documents themselves are still to be added.
 - [ ] **T11** Manual end-to-end verification (curl / Swagger UI against samples) — *R1-R4, R10-R12*
   - Positive: `/health`, `/extract` with a PDF and an image.
   - Negative: `.txt` → 415, empty file → 400, oversized → 413, unset key → app fails to boot, bad key → 502.
