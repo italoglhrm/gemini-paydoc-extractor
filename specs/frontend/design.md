@@ -30,7 +30,7 @@ One page, no router, no global store. A header, a short intro, and two cards sid
 
 ### FD1. Stack and project layout
 
-Vite, React 19, TypeScript (`strict`), Tailwind CSS 3.4 and npm, in `frontend/`, on Node 22. This is MyAgenda's stack. The Vite and plugin versions are re-checked when scaffolding (MyAgenda is on Vite 5.4), and `react` and `react-dom` are declared explicitly instead of arriving as peer dependencies. The API base URL comes from `VITE_API_URL` (default `http://localhost:8000`); the dev server runs on `5173`, which is the default allowed origin in R15. *(F7, F13)*
+Vite, React 19, TypeScript (`strict`), Tailwind CSS 3.4 and npm, in `frontend/`, on Node 22. This is MyAgenda's stack. The versions were re-checked when scaffolding (MyAgenda is on Vite 5.4): Vite 8, `@vitejs/plugin-react` 6, TypeScript 7, React 19.3, Tailwind 3.4.19. Tailwind stays on 3.x, so `tailwind-merge` stays on 2.x (3.x targets Tailwind 4 class names). `react` and `react-dom` are declared explicitly instead of arriving as peer dependencies. The API base URL comes from `VITE_API_URL` (default `http://localhost:8000`); the dev server runs on `5173`, the default allowed origin in R15, pinned with `strictPort` so it cannot drift to another port and break CORS silently. *(F7, F13)*
 
 ```
 frontend/
@@ -50,7 +50,7 @@ frontend/
 
 ### FD2. Design system: shadcn/ui, light theme only
 
-Components follow shadcn/ui's reference sources in the `new-york` style (denser and sharper than `default`), built on Radix primitives, `class-variance-authority`, `clsx` and `tailwind-merge` (`cn()`), with Lucide icons and Inter. A `components.json` keeps the shadcn CLI usable; `tailwindcss-animate` supplies the `animate-in` classes the Radix components use. The Sonner wrapper is pinned to the light theme (no `next-themes`). *(F13)*
+Components follow shadcn/ui's reference sources in the `new-york` style (denser and sharper than `default`), built on Radix primitives, `class-variance-authority`, `clsx` and `tailwind-merge` (`cn()`), with Lucide icons and Inter. A `components.json` is kept and verified to work: the shadcn CLI (4.x) accepts it for this Tailwind 3.4 setup and emits the classic `new-york` sources (checked with `add button --dry-run`), so the primitives are generated with the CLI rather than ported by hand. `tailwindcss-animate` supplies the `animate-in` classes the Radix components use. The Sonner wrapper is pinned to the light theme (no `next-themes`). *(F13)*
 
 Tokens are CSS variables in `:root`, stored as HSL channels so opacity modifiers (`bg-primary/10`) work, and exposed through `tailwind.config.js` in shadcn's vocabulary. The palette is MyAgenda's. Contrast was measured with WCAG 2.x formulas:
 
@@ -81,7 +81,7 @@ Rules that follow from the measurements:
 - Restraint: indigo only for the primary action, focus and selection; status colors only where they mean something; no gradients, no glass effects beyond a subtle header blur, no decorative backgrounds, no emoji; `shadow-sm` on cards and shadcn's standard popover shadow on floating layers (dropdown, tooltip, toasts) and nowhere else; spacing on a 4/8 px grid.
 - **Dark theme (deferred):** adding it later means a `.dark` block. MyAgenda's own dark primary `#7B73E4` fails AA (white on it is 3.88:1, and as text on cards 4.49:1), so the dark set would use `#8B83F4` with near-black text on it (5.98:1).
 
-Typography: Inter 400/500/600. Intro heading 24 px semibold with tight tracking, card titles 16 px, labels 12-13 px in `muted-foreground`, values 14-15 px, `tabular-nums` for amounts and percentages.
+Typography: Inter, as a variable font self-hosted through `@fontsource-variable/inter`, so no request goes to a font CDN (fitting for a UI that talks about privacy). Intro heading 24 px semibold with tight tracking, card titles 16 px, labels 12-13 px in `muted-foreground`, values 14-15 px, `tabular-nums` for amounts and percentages.
 
 ### FD3. Layout
 
