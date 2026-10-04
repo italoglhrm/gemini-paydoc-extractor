@@ -22,9 +22,9 @@
 - [x] **T9** `tests/test_schemas.py` (schema-only, no live Gemini calls) — *R5-R9*
   - Done when: `pytest` passes offline and covers enum values, nullability, confidence bounds, blank-string handling and the schema conversion.
   - Kept local: `tests/` is git-ignored, so this file is not part of the repository.
-- [ ] **T10** User sources sample documents into `samples/` + `samples/README.md`
+- [x] **T10** User sources sample documents into `samples/` + `samples/README.md`
   - Synthetic or public documents only. No real company or personal data.
-  - `samples/README.md` is written (rules and a suggested set). The documents themselves are still to be added.
+  - Done with seven synthetic documents with known answers (invented data only), each aimed at a requirement. `samples/README.md` lists the rules, what each file checks and the expected values.
 - [ ] **T11** Manual end-to-end verification (curl / Swagger UI against samples) — *R1-R4, R10-R12*
   - Positive: `/health`, `/extract` with a PDF and an image.
   - Negative: `.txt` → 415, empty file → 400, oversized → 413, unset key → app fails to boot, bad key → 502.
