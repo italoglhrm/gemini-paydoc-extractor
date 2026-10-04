@@ -59,6 +59,7 @@ Requirements use [EARS](https://alistairmavin.com/ears/) (Easy Approach to Requi
 | R10 | WHEN `GEMINI_API_KEY` is not configured, THE SYSTEM SHALL fail to start with a clear error, rather than fail per-request. |
 | R11 | WHEN the Gemini API call fails (network/quota/malformed response), THE SYSTEM SHALL return HTTP 502 with a descriptive error. |
 | R12 | THE SYSTEM SHALL expose `GET /health` returning 200 when running. |
+| R15 | WHEN a browser sends a request from an origin listed in `CORS_ORIGINS` (default `http://localhost:5173`), THE SYSTEM SHALL answer with the matching CORS headers, preflight requests included, and SHALL NOT send them to any other origin. |
 
 ### Boundaries (negative requirements)
 
@@ -72,5 +73,5 @@ Requirements use [EARS](https://alistairmavin.com/ears/) (Easy Approach to Requi
 - Multi-level approval chains, ERP push/export (R13).
 - Company-specific fields: tax-ID validation, cost centers, approval thresholds.
 - Stateful review/edit sessions, storage of any kind (R14).
-- A frontend. It is deferred, and the API is shaped so one can be added without reworking the extraction logic.
-- Authentication, rate limiting, CORS.
+- The browser UI itself, which has its own chain in [specs/frontend/](frontend/requirements.md). The only thing it needs from this service is R15.
+- Authentication and rate limiting.

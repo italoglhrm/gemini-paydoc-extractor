@@ -90,8 +90,8 @@ Instructions, in order: classify the type → extract the six fields → normali
 - **`file` is declared optional in the signature** so a missing part reaches our code and returns **400** per R4. If it were required, FastAPI would answer 422.
 - **The content type is the one the client declares** (parameters such as `; charset=` stripped). Magic-byte sniffing is not required by R2 and is listed as a roadmap item.
 - **Errors:** `GeminiExtractionError` → HTTP 502 with `{"detail": "<message>"}`. Document content is never logged. *(R11, R14)*
-- **Startup:** a `lifespan` handler loads `Settings` and builds the Gemini client. If settings are invalid the app does not come up. *(R10)*
-- **No CORS yet.** To be added together with the frontend.
+- **Startup:** settings are loaded once, when the app object is built, and the Gemini client is created then. `create_app(settings=None, extractor=None)` builds the app and `app = create_app()` at module level keeps `uvicorn app.main:app` working. If settings are invalid the process never serves a request. *(R10)* This replaces loading the settings in `lifespan`, because middleware (CORS) must be registered before the app starts and needs the settings. The client is still closed in `lifespan`. A side effect is that importing `app.main` without a key now raises `ConfigError`; the optional arguments let tools build an app without environment variables or network.
+- **CORS:** `CORSMiddleware` allows only the origins in `CORS_ORIGINS`, for `GET` and `POST`, any request header, and no credentials (there are no cookies or auth). A request from any other origin gets no CORS headers, so browsers block it. *(R15)*
 - **Known limit:** the multipart body is received in full before our size check runs. The 413 protects Gemini (and cost), not the server's bandwidth. Fine for a single-user demo service; a reverse proxy limit would be the production answer.
 
 ### D7. Configuration (`app/config.py`)
@@ -104,6 +104,7 @@ Instructions, in order: classify the type → extract the six fields → normali
 | `GEMINI_MODEL` | no | `gemini-3.5-flash-lite` | |
 | `MAX_UPLOAD_MB` | no | `10` | Must be > 0 *(R3)* |
 | `LOW_CONFIDENCE_THRESHOLD` | no | `0.7` | Must be in `[0, 1]` *(R9)* |
+| `CORS_ORIGINS` | no | `http://localhost:5173` | Comma-separated origins, each `scheme://host[:port]` with no path. Empty entries, `*` and malformed values → startup fails *(R15)* |
 
 A `load_settings()` wrapper turns pydantic's validation error into a short message that names the variable and points at `.env.example`. *(R10)*
 
@@ -126,6 +127,8 @@ app/
 samples/README.md        how to source sample documents (synthetic/public only)
 tests/test_schemas.py    schema tests, no network (local only, git-ignored)
 specs/                   requirements.md, design.md, tasks.md
+specs/frontend/          requirements.md, design.md, tasks.md (the browser UI)
+frontend/                Vite + React + TypeScript UI (see specs/frontend/design.md)
 ```
 
 ## Requirement traceability
@@ -146,3 +149,4 @@ specs/                   requirements.md, design.md, tasks.md
 | R12 | D6 |
 | R13 | D8 (and nothing is built for it) |
 | R14 | D1, D6, D8 |
+| R15 | D6, D7 |

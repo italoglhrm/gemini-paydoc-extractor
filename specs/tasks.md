@@ -33,6 +33,10 @@
   - Found and fixed along the way: a degraded scan returned misread digits at 0.95 confidence, and an ambiguous date was guessed at 0.90. Both led to prompt rules (design D5), and an SDK warning led to disabling automatic function calling (design D4).
   - Caveat: those prompt rules were tuned after seeing failures on these same samples, so the scores are optimistic. Real-world documents are the next test.
 - [ ] **T12** Full `README.md` (pitch, architecture, setup, usage, limitations, roadmap)
+  - Scheduled after the frontend (F-T10 in `specs/frontend/tasks.md`) so it can show real UI screenshots. Bilingual, with an English and a Portuguese section like MyAgenda's README.
+- [ ] **T13** CORS for the browser UI (`app/config.py`, `app/main.py`, `.env.example`) — *R15, R10* · design D6, D7
+  - Done when: an allowed origin gets CORS headers on actual and preflight requests and any other origin gets none; `CORS_ORIGINS` rejects `*`, empty entries and malformed values at startup; `create_app()` keeps `uvicorn app.main:app` working; booting without a key still fails; the existing offline checks still pass.
+  - Prerequisite for the frontend, which has its own chain in `specs/frontend/`.
 
 ## Requirement coverage
 
@@ -52,3 +56,6 @@
 | R12 | T8, T11 |
 | R13 | no task, by design (nothing is built) |
 | R14 | no task, by design (nothing is built) |
+| R15 | T13 |
+
+**Work order from here:** T13, then the frontend chain in [specs/frontend/tasks.md](frontend/tasks.md), then T12.
