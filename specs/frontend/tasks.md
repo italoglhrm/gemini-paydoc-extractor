@@ -10,7 +10,7 @@
 - [x] **F-T1** Scaffold `frontend/` — *F7, F13* · design FD1, FD2
   - Vite + React 19 + TypeScript strict, Tailwind 3.4 with `tailwindcss-animate`, PostCSS, `components.json`, Inter, `.env.example` (`VITE_API_URL`), tokens in `index.css` (light only, HSL channels), and `node_modules/` and `dist/` added to the root `.gitignore`.
   - Done when: `npm run dev` serves an empty styled shell, `tsc --noEmit` and `npm run build` pass, and the tokens in `index.css` equal the FD2 table.
-- [ ] **F-T2** shadcn-style UI primitives — *F13* · design FD2
+- [x] **F-T2** shadcn-style UI primitives — *F13* · design FD2
   - Button, Badge, Card, Alert, Table, Tabs, Progress, Skeleton, Separator, Tooltip, DropdownMenu and the Sonner wrapper under `src/components/ui/`, in the `new-york` style, generated with the shadcn CLI (verified to support this Tailwind 3.4 setup in F-T1).
   - Done when: each primitive renders with tokens only, with a visible focus ring, and no color literal appears under `src/components`.
 - [ ] **F-T3** Types and API client — *F3, F6* · design FD5, FD11
