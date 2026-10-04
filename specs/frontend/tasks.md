@@ -19,7 +19,7 @@
 - [x] **F-T4** Internationalization — *F7* · design FD8
   - `lib/i18n.ts` (typed dictionaries), `LanguageContext`, `LanguageToggle`, `<html lang>` sync, and the formatting helpers in `lib/format.ts` (dates, amounts).
   - Done when: the toggle switches every string, the choice persists, English is the default, and a key missing from either language fails `tsc`.
-- [ ] **F-T5** App shell — *F11, F13* · design FD3
+- [x] **F-T5** App shell — *F11, F13* · design FD3
   - Header, intro, the two-column grid that stacks below `lg`, the Result card's empty state, the hidden live region, page title and favicon.
   - Done when: the layout holds from 360 px to a wide desktop and matches the FD3 description.
 - [ ] **F-T6** Upload, validation, preview and privacy note — *F1, F2, F8, F10, F11* · design FD4, FD9

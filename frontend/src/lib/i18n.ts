@@ -17,6 +17,12 @@ const en = {
   introTitle: 'Extract data from payment documents',
   introSubtitle:
     'Upload an invoice, boleto, receipt or waybill and get structured data with a confidence score for each field.',
+  // layout
+  skipToContent: 'Skip to content',
+  documentTitle: 'Document',
+  documentDescription: 'Choose a file to extract data from.',
+  resultTitle: 'Result',
+  resultEmpty: 'The extracted data will appear here.',
   // language toggle (describes what clicking does)
   switchLanguage: 'Switch to Portuguese',
 } as const
@@ -28,6 +34,11 @@ const pt: Dict = {
   introTitle: 'Extraia dados de documentos de pagamento',
   introSubtitle:
     'Envie uma fatura, boleto, recibo ou conhecimento de transporte e receba os dados estruturados com um índice de confiança para cada campo.',
+  skipToContent: 'Ir para o conteúdo',
+  documentTitle: 'Documento',
+  documentDescription: 'Escolha um arquivo para extrair os dados.',
+  resultTitle: 'Resultado',
+  resultEmpty: 'Os dados extraídos aparecerão aqui.',
   switchLanguage: 'Mudar para inglês',
 }
 
