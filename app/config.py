@@ -1,7 +1,12 @@
 """Settings (design D7). Invalid or missing configuration stops the app at startup (R10)."""
 
+import re
+
 from pydantic import Field, ValidationError, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# scheme://host[:port], no path and no trailing slash. "*" and empty entries do not match.
+_ORIGIN = re.compile(r"https?://[A-Za-z0-9.-]+(:\d{1,5})?")
 
 
 class ConfigError(RuntimeError):
@@ -13,6 +18,8 @@ def _describe(err: dict) -> str:
         return "is not set"
     if err["type"] == "string_too_short":
         return "must not be empty"
+    if err["type"] == "value_error":
+        return err["msg"].removeprefix("Value error, ")
     return err["msg"]
 
 
@@ -23,12 +30,30 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-3.5-flash-lite"
     max_upload_mb: int = Field(default=10, gt=0)
     low_confidence_threshold: float = Field(default=0.7, ge=0.0, le=1.0)
+    # Comma-separated. Kept as a string so it works with any pydantic-settings version.
+    cors_origins: str = "http://localhost:5173"
 
     @field_validator("gemini_api_key", mode="before")
     @classmethod
     def _strip_key(cls, value: object) -> object:
         # Whitespace-only counts as missing.
         return value.strip() if isinstance(value, str) else value
+
+    @field_validator("cors_origins")
+    @classmethod
+    def _check_origins(cls, value: str) -> str:
+        origins = [o.strip() for o in value.split(",")]
+        for origin in origins:
+            if not _ORIGIN.fullmatch(origin):
+                raise ValueError(
+                    f"{origin!r} is not a valid origin. Use scheme://host[:port] with no path "
+                    "or trailing slash, separated by commas ('*' is not allowed)."
+                )
+        return ",".join(origins)
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        return self.cors_origins.split(",")
 
     @property
     def max_upload_bytes(self) -> int:
@@ -45,5 +70,5 @@ def load_settings() -> Settings:
         )
         raise ConfigError(
             f"Invalid configuration:\n{problems}\n"
-            "Copy .env.example to .env and set GEMINI_API_KEY."
+            "See .env.example for the expected settings (GEMINI_API_KEY is required)."
         ) from None
