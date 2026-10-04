@@ -16,7 +16,7 @@
 - [x] **F-T3** Types and API client — *F3, F6* · design FD5, FD11
   - `src/types.ts` mirroring the backend schemas, and `lib/api.ts` with `extractDocument(file, signal)` and `ApiError`.
   - Done when: each failure in the FD5 table yields the right `kind`, cancellation yields `aborted`, and a malformed body yields `unexpected`.
-- [ ] **F-T4** Internationalization — *F7* · design FD8
+- [x] **F-T4** Internationalization — *F7* · design FD8
   - `lib/i18n.ts` (typed dictionaries), `LanguageContext`, `LanguageToggle`, `<html lang>` sync, and the formatting helpers in `lib/format.ts` (dates, amounts).
   - Done when: the toggle switches every string, the choice persists, English is the default, and a key missing from either language fails `tsc`.
 - [ ] **F-T5** App shell — *F11, F13* · design FD3
