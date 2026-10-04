@@ -17,3 +17,8 @@ Thumbs.db
 
 # Local-only: tests are kept out of version control
 tests/
+
+# Frontend
+node_modules/
+dist/
+.env.*.local

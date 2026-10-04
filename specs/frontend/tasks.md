@@ -7,7 +7,7 @@
 
 ## Tasks
 
-- [ ] **F-T1** Scaffold `frontend/` — *F7, F13* · design FD1, FD2
+- [x] **F-T1** Scaffold `frontend/` — *F7, F13* · design FD1, FD2
   - Vite + React 19 + TypeScript strict, Tailwind 3.4 with `tailwindcss-animate`, PostCSS, `components.json`, Inter, `.env.example` (`VITE_API_URL`), tokens in `index.css` (light only, HSL channels), and `node_modules/` and `dist/` added to the root `.gitignore`.
   - Done when: `npm run dev` serves an empty styled shell, `tsc --noEmit` and `npm run build` pass, and the tokens in `index.css` equal the FD2 table.
 - [ ] **F-T2** shadcn-style UI primitives — *F13* · design FD2
