@@ -63,7 +63,8 @@ This is a judgement call the requirements leave open. It is isolated in one func
 
 - Async client from `google-genai`: `client.aio.models.generate_content(...)`. *(R1)*
 - Structured output: `response_mime_type="application/json"` and `response_schema=ExtractionResult`. The reply is parsed from `response.text` with `ExtractionResult.model_validate_json`, so a malformed reply raises a validation error we control. *(R1, R8, R11)*
-- `temperature=0.0`: extraction should be repeatable.
+- `temperature=0.0`: extraction should be repeatable. In practice output still varies slightly between runs, so verification repeats each sample rather than trusting one pass.
+- Automatic function calling is explicitly disabled: no tools are used, and the SDK would otherwise log a warning on the first call.
 - The prompt goes in `system_instruction`; the user turn carries the file part and a one-line instruction.
 - A request timeout (60 s) is set through `HttpOptions` so a stalled call becomes a 502 instead of hanging the request. *(R11)*
 - **Error wrapping:** SDK API errors, transport errors (`httpx.HTTPError`), an empty reply (e.g. blocked by safety filters) and an unparsable reply are all re-raised as one `GeminiExtractionError` carrying a descriptive message. Other exceptions are programming errors and are *not* swallowed. *(R11)*
@@ -77,7 +78,9 @@ Instructions, in order: classify the type → extract the six fields → normali
 
 - **Document types are defined in the prompt** (what makes something a boleto vs. an invoice vs. a receipt vs. a waybill), with `unknown` as the explicit fallback. *(R5)*
 - **Normalization rules are explicit.** `1.234,56` becomes `1234.56`. `currency` is an ISO 4217 code, set only when the document makes it unambiguous (`R$` → `BRL`; a bare `$` → `null`). *(R6, R7)*
+- **Date order comes only from evidence inside the document:** another date that is valid in one order only, a written month, or an explicit format label. It is never inferred from currency, language or country, and a numeric date that stays ambiguous (`03/04/2026`) becomes `null`. *(R7)*
 - **Confidence bands are anchored.** Clearly stated → `0.9-1.0`; partial or inferred → `0.5-0.8`; missing or guessed → `< 0.3`. Without anchors, models tend to answer about `0.9` for everything, which makes the threshold in D3 useless. *(R8)*
+- **Reading quality and arithmetic lower confidence.** On a blurry, skewed or obscured document, fields read from the affected area (numbers, dates and identifiers, where look-alike digits get misread) stay in the `0.5-0.8` band at best. A total that disagrees with its line items, tax and shipping is re-read and, if it still disagrees, scored down. *(R8)* This bullet and the date-order rule above were added after live testing: a degraded scan came back with misread digits at `0.95`, and an ambiguous date was guessed month-first at `0.90`.
 - **The document is data, not instructions.** The prompt says text inside the document must never be followed as instructions. *(R1, R7)*
 
 ### D6. HTTP layer (`app/main.py`)

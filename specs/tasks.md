@@ -25,10 +25,13 @@
 - [x] **T10** User sources sample documents into `samples/` + `samples/README.md`
   - Synthetic or public documents only. No real company or personal data.
   - Done with seven synthetic documents with known answers (invented data only), each aimed at a requirement. `samples/README.md` lists the rules, what each file checks and the expected values.
-- [ ] **T11** Manual end-to-end verification (curl / Swagger UI against samples) — *R1-R4, R10-R12*
+- [x] **T11** Manual end-to-end verification (curl / Swagger UI against samples) — *R1-R4, R10-R12*
   - Positive: `/health`, `/extract` with a PDF and an image.
   - Negative: `.txt` → 415, empty file → 400, oversized → 413, unset key → app fails to boot, bad key → 502.
-  - Verified so far without a real key: a missing or blank key stops the app from booting; `.txt` → 415, empty file → 400 and a bad key → 502 against a running server; oversized → 413 through an in-process test client. Still open: the positive paths, which need a real `GEMINI_API_KEY` and the samples from T10.
+  - Verified against the live Gemini API with the T10 samples, through the running server: the document type, every field, null-over-guess and the R9 summary were checked against the known answers. Result: 56/56 checks on one run and 168/168 over three repeats. A 429 and a 503 from Google came back as HTTP 502 with Google's message (R11).
+  - Negative paths verified over HTTP against a running server: `.txt` → 415, empty or missing file → 400, 11 MB upload → 413, missing or blank key → the app does not boot, bad key → 502.
+  - Found and fixed along the way: a degraded scan returned misread digits at 0.95 confidence, and an ambiguous date was guessed at 0.90. Both led to prompt rules (design D5), and an SDK warning led to disabling automatic function calling (design D4).
+  - Caveat: those prompt rules were tuned after seeing failures on these same samples, so the scores are optimistic. Real-world documents are the next test.
 - [ ] **T12** Full `README.md` (pitch, architecture, setup, usage, limitations, roadmap)
 
 ## Requirement coverage
