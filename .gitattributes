@@ -1,0 +1,4 @@
+# Sample documents must never have their line endings rewritten on checkout.
+*.pdf binary
+*.png binary
+*.jpg binary
