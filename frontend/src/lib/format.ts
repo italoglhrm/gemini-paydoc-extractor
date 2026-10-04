@@ -38,6 +38,20 @@ export function formatAmount(
   return { text, currencyKnown: false }
 }
 
+/** 1536 becomes "1.5 kB" (en-US) or "1,5 kB" (pt-BR). Uses 1024-based steps, like most file dialogs. */
+export function formatFileSize(bytes: number, locale: string): string {
+  // Intl would print "512 byte"; "512 B" reads better.
+  if (bytes < 1024) return `${new Intl.NumberFormat(locale).format(bytes)} B`
+  const [value, unit] =
+    bytes < 1024 * 1024 ? [bytes / 1024, 'kilobyte'] : [bytes / (1024 * 1024), 'megabyte']
+  return new Intl.NumberFormat(locale, {
+    style: 'unit',
+    unit,
+    unitDisplay: 'short',
+    maximumFractionDigits: 1,
+  }).format(value)
+}
+
 /** 0.97 becomes "97%". */
 export function formatPercent(score: number, locale: string): string {
   return new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 0 }).format(score)
