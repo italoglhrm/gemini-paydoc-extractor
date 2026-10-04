@@ -44,6 +44,8 @@ class GeminiClient:
                     response_mime_type="application/json",
                     response_schema=ExtractionResult,
                     temperature=0.0,
+                    # No tools are used, so the SDK's default automatic function calling is off.
+                    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
                 ),
             )
         except errors.APIError as exc:
