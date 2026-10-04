@@ -2,7 +2,7 @@
 
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import APIRouter, Depends, FastAPI, File, HTTPException, Request, UploadFile
 
 from app.config import Settings, load_settings
 from app.extraction_service import Extractor, extract_document
@@ -11,23 +11,7 @@ from app.schemas import ExtractResponse
 
 ALLOWED_CONTENT_TYPES = {"application/pdf", "image/jpeg", "image/png"}
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Raises ConfigError if GEMINI_API_KEY is missing, so the app never starts half-configured (R10).
-    settings = load_settings()
-    client = GeminiClient(settings.gemini_api_key, settings.gemini_model)
-    app.state.settings = settings
-    app.state.extractor = client
-    yield
-    await client.aclose()
-
-
-app = FastAPI(
-    title="Gemini Payment-Document Extractor",
-    description="Upload an invoice, boleto, receipt or waybill; get structured JSON with per-field confidence.",
-    lifespan=lifespan,
-)
+router = APIRouter()
 
 
 def get_settings(request: Request) -> Settings:
@@ -38,12 +22,12 @@ def get_extractor(request: Request) -> Extractor:
     return request.app.state.extractor
 
 
-@app.get("/health")
+@router.get("/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.post("/extract", response_model=ExtractResponse)
+@router.post("/extract", response_model=ExtractResponse)
 async def extract(
     # Optional in the signature so a missing part reaches our code and yields 400 (R4), not 422.
     file: UploadFile | None = File(default=None),
@@ -76,3 +60,33 @@ async def extract(
         )
     except GeminiExtractionError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+def create_app(settings: Settings | None = None, extractor: Extractor | None = None) -> FastAPI:
+    """Build the app. Both arguments exist so tools can build one without env vars or network."""
+    # Settings are loaded when the app is built: middleware must be registered before startup and
+    # needs them. A missing key therefore stops the process here, before it serves anything (R10).
+    if settings is None:
+        settings = load_settings()
+    if extractor is None:
+        extractor = GeminiClient(settings.gemini_api_key, settings.gemini_model)
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI):
+        yield
+        close = getattr(extractor, "aclose", None)
+        if close is not None:
+            await close()
+
+    app = FastAPI(
+        title="Gemini Payment-Document Extractor",
+        description="Upload an invoice, boleto, receipt or waybill; get structured JSON with per-field confidence.",
+        lifespan=lifespan,
+    )
+    app.state.settings = settings
+    app.state.extractor = extractor
+    app.include_router(router)
+    return app
+
+
+app = create_app()
