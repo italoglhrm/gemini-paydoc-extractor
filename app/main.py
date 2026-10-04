@@ -3,6 +3,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, Depends, FastAPI, File, HTTPException, Request, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import Settings, load_settings
 from app.extraction_service import Extractor, extract_document
@@ -82,6 +83,13 @@ def create_app(settings: Settings | None = None, extractor: Extractor | None = N
         title="Gemini Payment-Document Extractor",
         description="Upload an invoice, boleto, receipt or waybill; get structured JSON with per-field confidence.",
         lifespan=lifespan,
+    )
+    # Only the configured origins get CORS headers (R15). No credentials: there are no cookies or auth.
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.cors_origin_list,
+        allow_methods=["GET", "POST"],
+        allow_headers=["*"],
     )
     app.state.settings = settings
     app.state.extractor = extractor
