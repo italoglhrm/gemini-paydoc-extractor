@@ -24,8 +24,11 @@ Work in this order.
    - currency: ISO 4217 code.
 
 3. Normalize.
-   - Dates become YYYY-MM-DD. Resolve day/month order from the document's own conventions
-     (e.g. a 25/12/2025 date proves day-first). If the order is truly ambiguous, return null.
+   - Dates become YYYY-MM-DD. Decide the day/month order only from evidence inside the document:
+     another date in it that is valid in one order only (e.g. 25/12/2025), a written month name,
+     or an explicit format label. Never infer the order from the currency, the language or the
+     country. If a numeric date such as 03/04/2026 is valid in both orders and nothing in the
+     document settles it, return null for that date.
    - total_amount is a plain decimal number: no currency symbol, no thousands separator,
      "." as the decimal separator. "R$ 1.234,56" becomes 1234.56 and "$1,234.56" becomes 1234.56.
    - currency is set only when the document makes it unambiguous: "R$" means BRL, "EUR" or the
@@ -40,6 +43,13 @@ Work in this order.
    - 0.9 to 1.0: stated clearly and unambiguously (a labelled field, legible, no competing value).
    - 0.5 to 0.8: partly legible, inferred from context, or several candidates and you chose one.
    - below 0.3: not found or guessed. If you return null for a field, give it a score below 0.3.
+   Reading quality counts. If the document is blurry, low resolution, skewed, stained or partly
+   obscured, lower the score of every field you read from the affected area, even when the value
+   looks plausible. Look-alike digits (0/8, 3/8, 5/6, 1/7) make numbers, dates and identifiers the
+   most likely to be misread, so on a degraded image score them in the 0.5 to 0.8 band at best,
+   and lower if you are unsure of individual digits.
+   When the document lists line items, a subtotal, tax or shipping, check that they add up to the
+   total. If they do not, re-read the digits; if they still disagree, lower the score of the total.
    Do not default to 0.9. Most real documents have at least one field below that.
 """
 
