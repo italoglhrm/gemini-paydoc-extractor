@@ -23,6 +23,15 @@ const en = {
   documentDescription: 'Choose a file to extract data from.',
   resultTitle: 'Result',
   resultEmpty: 'The extracted data will appear here.',
+  // upload and preview
+  dropTitle: 'Drop a file here, or browse',
+  dropHint: 'PDF, JPEG or PNG, up to {max} MB',
+  removeFile: 'Remove file',
+  openInNewTab: 'Open in a new tab',
+  pdfPreviewUnavailable: 'This browser cannot show the PDF here.',
+  errorUnsupportedFile: 'Only PDF, JPEG and PNG files are supported.',
+  errorEmptyFile: 'This file is empty.',
+  errorFileTooLarge: 'The file is larger than {max} MB.',
   // language toggle (describes what clicking does)
   switchLanguage: 'Switch to Portuguese',
 } as const
@@ -39,6 +48,14 @@ const pt: Dict = {
   documentDescription: 'Escolha um arquivo para extrair os dados.',
   resultTitle: 'Resultado',
   resultEmpty: 'Os dados extraídos aparecerão aqui.',
+  dropTitle: 'Solte um arquivo aqui ou procure',
+  dropHint: 'PDF, JPEG ou PNG, até {max} MB',
+  removeFile: 'Remover arquivo',
+  openInNewTab: 'Abrir em uma nova aba',
+  pdfPreviewUnavailable: 'Este navegador não consegue mostrar o PDF aqui.',
+  errorUnsupportedFile: 'Apenas arquivos PDF, JPEG e PNG são aceitos.',
+  errorEmptyFile: 'Este arquivo está vazio.',
+  errorFileTooLarge: 'O arquivo é maior que {max} MB.',
   switchLanguage: 'Mudar para inglês',
 }
 

@@ -1,10 +1,38 @@
+import { useEffect, useState } from 'react'
+import { DocumentPreview } from '@/components/DocumentPreview'
 import { Header } from '@/components/Header'
+import { UploadZone } from '@/components/UploadZone'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext'
+import { validateFile, type FileProblem } from '@/lib/files'
 
 function Shell() {
   const { t } = useLanguage()
+  const [file, setFile] = useState<File | null>(null)
+  const [problem, setProblem] = useState<FileProblem | null>(null)
+
+  // A file dropped outside the zone would make the browser navigate to it and lose the page.
+  useEffect(() => {
+    const stop = (event: Event) => event.preventDefault()
+    window.addEventListener('dragover', stop)
+    window.addEventListener('drop', stop)
+    return () => {
+      window.removeEventListener('dragover', stop)
+      window.removeEventListener('drop', stop)
+    }
+  }, [])
+
+  function handleFile(next: File) {
+    const found = validateFile(next)
+    setProblem(found)
+    if (!found) setFile(next)
+  }
+
+  function handleRemove() {
+    setFile(null)
+    setProblem(null)
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -29,7 +57,13 @@ function Shell() {
               <CardTitle>{t('documentTitle')}</CardTitle>
               <CardDescription>{t('documentDescription')}</CardDescription>
             </CardHeader>
-            <CardContent />
+            <CardContent>
+              {file ? (
+                <DocumentPreview file={file} onRemove={handleRemove} />
+              ) : (
+                <UploadZone onFile={handleFile} problem={problem} />
+              )}
+            </CardContent>
           </Card>
 
           <Card className="lg:col-span-7">
