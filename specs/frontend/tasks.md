@@ -13,7 +13,7 @@
 - [x] **F-T2** shadcn-style UI primitives — *F13* · design FD2
   - Button, Badge, Card, Alert, Table, Tabs, Progress, Skeleton, Separator, Tooltip, DropdownMenu and the Sonner wrapper under `src/components/ui/`, in the `new-york` style, generated with the shadcn CLI (verified to support this Tailwind 3.4 setup in F-T1).
   - Done when: each primitive renders with tokens only, with a visible focus ring, and no color literal appears under `src/components`.
-- [ ] **F-T3** Types and API client — *F3, F6* · design FD5, FD11
+- [x] **F-T3** Types and API client — *F3, F6* · design FD5, FD11
   - `src/types.ts` mirroring the backend schemas, and `lib/api.ts` with `extractDocument(file, signal)` and `ApiError`.
   - Done when: each failure in the FD5 table yields the right `kind`, cancellation yields `aborted`, and a malformed body yields `unexpected`.
 - [ ] **F-T4** Internationalization — *F7* · design FD8
