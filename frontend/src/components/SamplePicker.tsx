@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { AlertCircle, ChevronDown, FileText, Image as ImageIcon, Loader2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -21,12 +21,20 @@ interface Props {
 /** "Try a sample" menu (design FD10). The user still has to click Extract afterwards. */
 export function SamplePicker({ onSample }: Props) {
   const { t } = useLanguage()
+  const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [failed, setFailed] = useState(false)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const pickedRef = useRef(false)
 
   if (SAMPLES.length === 0) return null
 
   async function pick(sample: Sample) {
+    if (loading) return
+    pickedRef.current = true
+    // Radix calls onSelect inside flushSync, so the re-render for setLoading below happens before it
+    // reports the menu closing. Closing here, explicitly, keeps the menu from reopening afterwards.
+    setOpen(false)
     setFailed(false)
     setLoading(true)
     try {
@@ -37,6 +45,7 @@ export function SamplePicker({ onSample }: Props) {
       onSample(new File([blob], sample.fileName, { type: sample.mimeType }))
     } catch {
       setFailed(true)
+      triggerRef.current?.focus() // nothing was chosen, so focus stays where the user was
     } finally {
       setLoading(false)
     }
@@ -44,15 +53,36 @@ export function SamplePicker({ onSample }: Props) {
 
   return (
     <div className="space-y-2">
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={(next) => setOpen(next && !loading)}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" disabled={loading}>
+          {/* aria-disabled instead of disabled while loading: a disabled button cannot hold focus, and
+              the menu is closing around it, so keyboard focus would be lost to the top of the page. */}
+          <Button
+            ref={triggerRef}
+            variant="outline"
+            aria-disabled={loading || undefined}
+            aria-busy={loading || undefined}
+            className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
+          >
             {loading ? <Loader2 className="animate-spin" aria-hidden="true" /> : null}
             {t('trySample')}
             <ChevronDown aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-80">
+        <DropdownMenuContent
+          align="start"
+          // No exit animation: while the menu fades out, the item slides from under a still pointer and
+          // Radix hands focus back to the menu, undoing the move to Extract. It unmounts at once instead.
+          className="w-80 data-[state=closed]:!animate-none"
+          onCloseAutoFocus={(event) => {
+            // After a pick, the app moves focus to Extract. Without a pick (Escape, click outside),
+            // the default applies and focus returns to this trigger.
+            if (pickedRef.current) {
+              event.preventDefault()
+              pickedRef.current = false
+            }
+          }}
+        >
           <DropdownMenuLabel>{t('sampleMenuLabel')}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {SAMPLES.map((sample) => (
