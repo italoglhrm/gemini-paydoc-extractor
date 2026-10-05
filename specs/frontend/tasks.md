@@ -28,7 +28,7 @@
 - [x] **F-T7** Sample picker — *F9* · design FD10
   - `SamplePicker` and `lib/samples.ts`, with `import.meta.glob` over `samples/` and `server.fs.allow`.
   - Done when: all seven samples are listed with localized names, choosing one loads it into the preview, and the production build bundles them.
-- [ ] **F-T8** Result panel — *F4, F5, F12, F13* · design FD7
+- [x] **F-T8** Result panel — *F4, F5, F12, F13* · design FD7
   - `ResultPanel`, `OverallConfidence`, `FieldsTable`, `RawJson`.
   - Done when: the six fields, their confidence and the overall confidence show; exactly the fields in `low_confidence_fields` are flagged; a null value reads "Not found"; dates and amounts follow the FD7 formatting rules; the JSON tab copies.
 - [ ] **F-T9** Extraction flow and error states — *F3, F6, F11* · design FD6, FD5

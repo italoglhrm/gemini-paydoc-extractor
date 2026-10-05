@@ -5,6 +5,7 @@ import { PrivacyNote } from '@/components/PrivacyNote'
 import { SamplePicker } from '@/components/SamplePicker'
 import { UploadZone } from '@/components/UploadZone'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext'
 import { validateFile, type FileProblem } from '@/lib/files'
@@ -92,6 +93,7 @@ export default function App() {
     <LanguageProvider>
       <TooltipProvider>
         <Shell />
+        <Toaster />
       </TooltipProvider>
     </LanguageProvider>
   )
