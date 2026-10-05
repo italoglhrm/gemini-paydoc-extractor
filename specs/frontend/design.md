@@ -159,7 +159,7 @@ Formatting, with the locale `en-US` or `pt-BR` following the language:
 
 ### FD10. Samples
 
-*(F9)* A `DropdownMenu` labelled "Try a sample" lists the seven samples with localized names and a short kind badge. The files come from `samples/` through `import.meta.glob('../../samples/sample_*.{pdf,png,jpg}', { query: '?url', import: 'default', eager: true })`, with `server.fs.allow: ['..']` in dev, so the repository keeps a single copy; the production build hashes and bundles them (about 170 KB). `lib/samples.ts` maps file names to labels. Choosing one fetches it, wraps it in a `File` with the MIME type from its extension and runs it through the same validation and preview path as a user file. The user still has to click Extract.
+*(F9)* A `DropdownMenu` labelled "Try a sample" lists the seven samples with localized names and a short kind badge. The files come from `samples/` through `import.meta.glob('../../../samples/sample_*.{pdf,png,jpg}', { query: '?url', import: 'default', eager: true })` in `src/lib/samples.ts`, with `server.fs.allow: ['..']` in dev, so the repository keeps a single copy. The production build bundles them (about 170 KB): the three larger files become hashed assets and the four small PDFs, under Vite's 4 KB inline limit, are embedded as `data:` URLs; both load the same way through `fetch`. The same file maps names to labels. Choosing one fetches it, wraps it in a `File` with the MIME type from its extension and runs it through the same validation and preview path as a user file. The user still has to click Extract.
 
 ### FD11. Backend contract
 
