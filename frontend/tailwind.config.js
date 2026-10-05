@@ -5,7 +5,7 @@ const token = (name) => `hsl(var(--${name}) / <alpha-value>)`
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  // Light theme only (design FD2). Nothing ever adds the `dark` class, so `dark:` classes in
+  // Light theme only. Nothing ever adds the `dark` class, so `dark:` classes in
   // generated shadcn components stay inert instead of following the OS theme.
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{ts,tsx}'],

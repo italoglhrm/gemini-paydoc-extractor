@@ -17,7 +17,7 @@ interface Props {
   problem: FileProblem | null
 }
 
-/** Drop zone and picker (design FD4). A real button, so Enter and Space open the picker. */
+/** Drop zone and picker. A real button, so Enter and Space open the picker. */
 export function UploadZone({ onFile, problem }: Props) {
   const { t } = useLanguage()
   const inputRef = useRef<HTMLInputElement>(null)

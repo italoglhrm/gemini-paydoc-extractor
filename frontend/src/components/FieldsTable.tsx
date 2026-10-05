@@ -18,7 +18,7 @@ interface Row {
   hint: string | null
   score: number
   level: ConfidenceLevel
-  /** From `low_confidence_fields` only: the server owns the review threshold (design FD7). */
+  /** From `low_confidence_fields` only: the server owns the review threshold. */
   flagged: boolean
 }
 
@@ -44,7 +44,7 @@ function display(name: FieldName, data: DocumentData, locale: string, unknownCur
   }
 }
 
-/** Bar and percentage, both in the color of the score's level (F14). */
+/** Bar and percentage, both in the color of the score's level. */
 function ConfidenceBar({ row, locale, levelName }: { row: Row; locale: string; levelName: string }) {
   const percent = formatPercent(row.score, locale)
   const style = LEVEL_STYLE[row.level]

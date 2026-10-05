@@ -4,7 +4,7 @@ import { confidenceLevel, LEVEL_STYLE, percentOf } from '@/lib/confidence'
 import { formatPercent } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
-// Recharts is the heaviest dependency: the chart is fetched only when a result is first shown (design FD7).
+// Recharts is the heaviest dependency: the chart is fetched only when a result is first shown.
 const ConfidenceGauge = lazy(() => import('@/components/ConfidenceGauge'))
 
 /** Same size as the chart, so nothing moves when the chart arrives. */
@@ -12,7 +12,7 @@ function GaugeRing() {
   return <div aria-hidden="true" data-gauge-placeholder className="h-24 w-24 rounded-full border-[10px] border-border" />
 }
 
-/** The API's overall confidence: a radial chart with the percentage at its center (F15) and its level beside it (F14). */
+/** The API's overall confidence: a radial chart with the percentage at its center and its level beside it. */
 export function OverallConfidence({ score }: { score: number }) {
   const { t, locale } = useLanguage()
   const level = confidenceLevel(score)

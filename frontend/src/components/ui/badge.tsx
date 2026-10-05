@@ -15,9 +15,9 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
-        // Added for this app: the "Review" flag on a field (design FD7).
+        // Added for this app: the "Review" flag on a field.
         warning: "border-warning/30 bg-warning-soft text-warning",
-        // Added for this app: the Review flag on a low-confidence field (design FD7).
+        // Added for this app: the Review flag on a low-confidence field.
         danger: "border-destructive/30 bg-destructive-soft text-destructive",
       },
     },

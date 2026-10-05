@@ -12,7 +12,7 @@ interface LanguageContextValue {
 const STORAGE_KEY = 'lang'
 const LanguageContext = createContext<LanguageContextValue | null>(null)
 
-// The only value this app keeps in the browser (F10). Storage can be unavailable or hold junk.
+// The only value this app keeps in the browser. Storage can be unavailable or hold junk.
 function readStoredLang(): Lang {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)

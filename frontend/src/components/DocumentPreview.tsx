@@ -10,7 +10,6 @@ interface Props {
   onRemove: () => void
 }
 
-/** Preview of the chosen file with its name, size and a Remove button (design FD4). */
 export function DocumentPreview({ file, onRemove }: Props) {
   const { t, locale } = useLanguage()
   const [url, setUrl] = useState<string | null>(null)

@@ -11,7 +11,7 @@ const alertVariants = cva(
         default: "bg-background text-foreground",
         destructive:
           "border-destructive/30 bg-destructive-soft text-destructive [&>svg]:text-destructive",
-        // Added for this app: "needs review" (design FD7).
+        // Added for this app: "needs review".
         warning:
           "border-warning/30 bg-warning-soft text-warning [&>svg]:text-warning",
       },

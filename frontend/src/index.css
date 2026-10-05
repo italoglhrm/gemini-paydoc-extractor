@@ -4,7 +4,7 @@
 
 @layer base {
   /*
-   * Design tokens (specs/frontend/design.md, FD2). shadcn vocabulary, MyAgenda palette.
+   * Design tokens in shadcn's vocabulary with MyAgenda's palette (see specs/frontend/design.md).
    * Values are HSL channels so Tailwind can apply opacity modifiers. Light theme only.
    */
   :root {

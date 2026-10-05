@@ -4,7 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { API_URL, type ApiError, type ApiErrorKind } from '@/lib/api'
 import type { TranslationKey } from '@/lib/i18n'
 
-// One localized message per failure kind (design FD5). `aborted` is a user cancel and is never shown.
+// One localized message per failure kind. `aborted` is a user cancel and is never shown.
 const MESSAGE: Record<Exclude<ApiErrorKind, 'aborted'>, TranslationKey> = {
   bad_request: 'errBadRequest',
   too_large: 'errTooLarge',

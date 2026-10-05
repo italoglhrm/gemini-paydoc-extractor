@@ -8,14 +8,14 @@ import {
 export const API_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:8000').replace(/\/+$/, '')
 
 /**
- * Why a request failed (design FD5). The UI maps each kind to a localized message, so this
+ * Why a request failed. The UI maps each kind to a localized message, so this
  * module never produces user-facing text.
  */
 export type ApiErrorKind =
-  | 'bad_request' // 400: no file, or an empty one (R4)
-  | 'too_large' // 413 (R3)
-  | 'unsupported_type' // 415 (R2)
-  | 'service' // 502 and other 5xx: the extraction service failed (R11)
+  | 'bad_request' // 400: no file, or an empty one
+  | 'too_large' // 413
+  | 'unsupported_type' // 415
+  | 'service' // 502 and other 5xx: the extraction service failed
   | 'network' // the API could not be reached at all
   | 'unexpected' // any other status, or a body that is not what the API promises
   | 'aborted' // the user cancelled; not an error to show
@@ -81,7 +81,7 @@ function isExtractResponse(v: unknown): v is ExtractResponse {
   )
 }
 
-/** POST the file to /extract (R1). Throws ApiError; `aborted` means the caller cancelled. */
+/** POST the file to /extract. Throws ApiError; `aborted` means the caller cancelled. */
 export async function extractDocument(file: File, signal?: AbortSignal): Promise<ExtractResponse> {
   const body = new FormData()
   body.append('file', file)

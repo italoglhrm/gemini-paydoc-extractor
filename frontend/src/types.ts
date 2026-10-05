@@ -1,4 +1,4 @@
-// Mirrors the backend schemas in app/schemas.py. Keep the two in step (design FD5).
+// Mirrors the backend schemas in app/schemas.py. Keep the two in step.
 
 export const DOCUMENT_TYPES = ['invoice', 'boleto', 'receipt', 'waybill', 'unknown'] as const
 export type DocumentType = (typeof DOCUMENT_TYPES)[number]
@@ -13,7 +13,7 @@ export const FIELD_NAMES = [
 ] as const
 export type FieldName = (typeof FIELD_NAMES)[number]
 
-/** Extracted values. `null` means the API could not determine the field (R7). */
+/** Extracted values. `null` means the API could not determine the field. */
 export interface DocumentData {
   vendor_name: string | null
   document_number: string | null

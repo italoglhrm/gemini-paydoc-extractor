@@ -4,7 +4,7 @@ import { validateFile, type FileProblem } from '@/lib/files'
 import type { TranslateParams, TranslationKey } from '@/lib/i18n'
 import type { ExtractResponse } from '@/types'
 
-// The flow from design FD6, held in memory only (F10):
+// The extraction flow, held in memory only:
 //
 //   idle --choose file--> ready --Extract--> extracting --ok--> success
 //     ^                    |  ^                 |  \--fail--> error --Retry--> extracting

@@ -3,7 +3,7 @@ import * as ProgressPrimitive from "@radix-ui/react-progress"
 
 import { cn } from "@/lib/utils"
 
-// Changed from the shadcn source for this app (design FD2): the track is the `border` token, which
+// Changed from the shadcn source for this app: the track is the `border` token, which
 // is what the bar contrast was measured against, and the fill color can be set per use so a
 // flagged field can use the `warning` token itself.
 const Progress = React.forwardRef<

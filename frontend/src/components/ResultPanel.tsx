@@ -7,7 +7,6 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { DOCUMENT_TYPE_LABEL, FIELD_LABEL } from '@/lib/labels'
 import type { ExtractResponse } from '@/types'
 
-/** A successful extraction (design FD7). */
 export function ResultPanel({ result }: { result: ExtractResponse }) {
   const { t } = useLanguage()
   const flagged = result.low_confidence_fields

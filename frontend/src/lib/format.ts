@@ -1,4 +1,4 @@
-// Value formatting for the result (design FD7). All functions take the Intl locale (en-US or pt-BR).
+// Value formatting for the result. All functions take the Intl locale (en-US or pt-BR).
 
 /**
  * `YYYY-MM-DD` becomes a medium date ("Mar 14, 2026" / "14 de mar. de 2026"). Anything else, including

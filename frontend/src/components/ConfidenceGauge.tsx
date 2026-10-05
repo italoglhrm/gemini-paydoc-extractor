@@ -11,7 +11,7 @@ interface Props {
 }
 
 // Kept in its own module so that Recharts, the heaviest dependency, is only fetched once a result
-// exists (design FD7). Decorative: OverallConfidence puts the label and the readable number around it.
+// exists. Decorative: OverallConfidence puts the label and the readable number around it.
 export default function ConfidenceGauge({ percent, colorClass }: Props) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 

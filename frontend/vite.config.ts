@@ -9,9 +9,9 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    // The API allows http://localhost:5173 by default (R15); a drifting port would break CORS silently.
+    // The API allows http://localhost:5173 by default; a drifting port would break CORS silently.
     strictPort: true,
-    // samples/ lives one level above frontend/ and is served from there (design FD10).
+    // samples/ lives one level above frontend/ and is served from there.
     fs: { allow: ['..'] },
   },
 })

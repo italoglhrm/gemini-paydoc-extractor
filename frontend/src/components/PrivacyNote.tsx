@@ -1,7 +1,7 @@
 import { Info } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
-/** Always visible, never dismissible: the file leaves the browser when the user clicks Extract (F8). */
+/** Always visible, never dismissible: the file leaves the browser when the user clicks Extract. */
 export function PrivacyNote() {
   const { t } = useLanguage()
 

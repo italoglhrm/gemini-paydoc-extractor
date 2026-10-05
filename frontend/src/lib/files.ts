@@ -1,5 +1,5 @@
-// Client-side file checks (design FD4). They give fast feedback before an upload and mirror the
-// server's rules and order (R2, R3, R4); the server stays authoritative.
+// Client-side file checks. They give fast feedback before an upload and mirror the
+// server's rules and order; the server stays authoritative.
 
 const ACCEPTED_TYPES = ['application/pdf', 'image/jpeg', 'image/png'] as const
 

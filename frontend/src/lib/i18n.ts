@@ -1,5 +1,5 @@
-// Typed translations (design FD8). English is the source of truth: `Dict` is derived from it, so a
-// key that is missing or extra in Portuguese fails `tsc`. Each task adds the keys it needs.
+// Typed translations. English is the source of truth: `Dict` is derived from it, so a
+// key that is missing or extra in Portuguese fails `tsc`.
 // The product name ("PayDoc Extractor") is not translated and lives outside the dictionary.
 
 export type Lang = 'en' | 'pt'
@@ -68,7 +68,7 @@ const en = {
   retry: 'Try again',
   newDocument: 'New document',
   resultReady: 'Click Extract to read this document.',
-  // errors (design FD5)
+  // errors
   errorTitle: 'Extraction failed',
   errBadRequest: 'No file was received, or the file is empty.',
   errTooLarge: 'The file exceeds the size limit the server accepts.',
@@ -77,7 +77,7 @@ const en = {
   errNetwork: 'Could not reach the API at {url}. Check that it is running.',
   errUnexpected: 'Something unexpected happened.',
   serverMessage: 'Server message',
-  // announcements for assistive technology (design FD6)
+  // announcements for assistive technology
   statusReady: 'File ready: {name}',
   statusExtracting: 'Extracting…',
   statusDone: 'Extraction complete.',

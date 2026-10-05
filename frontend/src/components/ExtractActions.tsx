@@ -10,7 +10,7 @@ interface Props {
   onNew: () => void
 }
 
-/** The one primary action for the current state (design FD6). Extract is never triggered by choosing a file. */
+/** The one primary action for the current state. Extract is never triggered by choosing a file. */
 export function ExtractActions({ status, onExtract, onCancel, onNew }: Props) {
   const { t } = useLanguage()
 

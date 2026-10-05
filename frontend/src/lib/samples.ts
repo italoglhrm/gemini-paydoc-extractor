@@ -2,7 +2,7 @@ import type { TranslationKey } from '@/lib/i18n'
 
 // The sample documents live in the repository's samples/ folder (one level above frontend/) and are
 // served from there in dev (vite.config.ts allows the parent folder) and bundled by the build.
-// There are no copies (design FD10).
+// There are no copies.
 const urls = import.meta.glob<string>('../../../samples/sample_*.{pdf,png,jpg}', {
   query: '?url',
   import: 'default',

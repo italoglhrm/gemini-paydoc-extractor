@@ -17,7 +17,7 @@ function Shell() {
   const { t } = useLanguage()
   const flow = useExtraction()
 
-  // Keyboard focus follows the flow: the control that had it may have just disappeared (design FD6).
+  // Keyboard focus follows the flow: the control that had it may have just disappeared.
   useEffect(() => {
     if (!flow.focus) return
     const selector = flow.focus.target === 'extract' ? '[data-action="extract"]' : '[data-dropzone]'
@@ -51,7 +51,7 @@ function Shell() {
           <p className="max-w-2xl text-balance text-sm text-muted-foreground">{t('introSubtitle')}</p>
         </div>
 
-        {/* Two columns from lg, stacked below it, Document first (design FD3). */}
+        {/* Two columns from lg, stacked below it, Document first. */}
         <div className="grid gap-6 lg:grid-cols-12">
           <Card className="lg:col-span-5">
             <CardHeader>
@@ -96,7 +96,7 @@ function Shell() {
         </div>
       </main>
 
-      {/* Announces choosing a file, extracting, done, failed and cancelled to assistive technology (F11). */}
+      {/* Announces choosing a file, extracting, done, failed and cancelled to assistive technology. */}
       <div role="status" aria-live="polite" className="sr-only">
         {flow.announce ? t(flow.announce.key, flow.announce.params) : ''}
       </div>

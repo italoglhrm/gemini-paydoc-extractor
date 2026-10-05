@@ -1,6 +1,6 @@
 import type { TranslationKey } from '@/lib/i18n'
 
-// Confidence levels (design FD7). They are display bands for a score and nothing more: whether a field
+// Confidence levels. They are display bands for a score and nothing more: whether a field
 // needs review is decided by the server and arrives in `low_confidence_fields`, so the UI never
 // recomputes that. The bands follow the extraction prompt's own scale (clearly stated is 0.9 to 1.0,
 // partial is 0.5 to 0.8) and the server's default review threshold of 0.7.

@@ -10,7 +10,7 @@ const RANGE: Record<ConfidenceLevel, { key: TranslationKey; params: Record<strin
   low: { key: 'legendLow', params: { from: MEDIUM_FROM } },
 }
 
-/** Names the three confidence colors with their ranges. Color is never the only signal (F14). */
+/** Names the three confidence colors with their ranges. Color is never the only signal. */
 export function ConfidenceLegend() {
   const { t } = useLanguage()
 

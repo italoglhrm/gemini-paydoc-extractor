@@ -18,7 +18,7 @@ interface Props {
   onSample: (file: File) => void
 }
 
-/** "Try a sample" menu (design FD10). The user still has to click Extract afterwards. */
+/** "Try a sample" menu. The user still has to click Extract afterwards. */
 export function SamplePicker({ onSample }: Props) {
   const { t } = useLanguage()
   const [open, setOpen] = useState(false)
