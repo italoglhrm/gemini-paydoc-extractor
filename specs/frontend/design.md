@@ -87,7 +87,7 @@ Typography: Inter, as a variable font self-hosted through `@fontsource-variable/
 
 ### FD3. Layout
 
-*(F1, F3, F4, F11, F13)* A 56 px header with a subtle blur: brand mark and name `PayDoc Extractor` on the left, the language toggle on the right. Below it a centered `max-w-6xl` container with side padding of 16 px (24 px from `sm`). An intro block (`h1` plus one muted sentence), then a 12-column grid: the **Document** card spans 5 columns and the **Result** card 7, with a 24 px gap. Below `lg` the cards stack, Document first. The Result card has four states: empty (a quiet placeholder sentence), extracting (skeleton rows), error (destructive `Alert` with a Retry button), success (FD7).
+*(F1, F3, F4, F11, F13)* A 56 px header with a subtle blur: brand mark and name `PayDoc Extractor` on the left, the language toggle on the right. The mark is a receipt with one field lifted out of it, drawn in white on the `primary` square. It is the same glyph as the favicon (`public/favicon.svg`) and deliberately avoids the sparkles, robots, brains and gradients that signal "AI". Below it a centered `max-w-6xl` container with side padding of 16 px (24 px from `sm`). An intro block (`h1` plus one muted sentence), then a 12-column grid: the **Document** card spans 5 columns and the **Result** card 7, with a 24 px gap. Below `lg` the cards stack, Document first. The Result card has four states: empty (a quiet placeholder sentence), extracting (skeleton rows), error (destructive `Alert` with a Retry button), success (FD7).
 
 ### FD4. Upload, validation and preview
 
