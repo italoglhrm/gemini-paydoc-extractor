@@ -31,7 +31,7 @@
 - [x] **F-T8** Result panel — *F4, F5, F12, F13* · design FD7
   - `ResultPanel`, `OverallConfidence`, `FieldsTable`, `RawJson`.
   - Done when: the six fields, their confidence and the overall confidence show; exactly the fields in `low_confidence_fields` are flagged; a null value reads "Not found"; dates and amounts follow the FD7 formatting rules; the JSON tab copies.
-- [ ] **F-T9** Extraction flow and error states — *F3, F6, F11* · design FD6, FD5
+- [x] **F-T9** Extraction flow and error states — *F3, F6, F11* · design FD6, FD5
   - `useExtraction`, the skeleton state, Cancel, Retry, New document, `ErrorAlert`, and the live-region messages.
   - Done when: every transition in the FD6 diagram works, each error kind shows its own localized message, and state changes are announced.
 - [ ] **F-T10** End-to-end and visual verification — *F1-F13* · design FD12

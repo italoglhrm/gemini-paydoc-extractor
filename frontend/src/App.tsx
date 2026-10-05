@@ -1,19 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { DocumentPreview } from '@/components/DocumentPreview'
+import { ErrorAlert } from '@/components/ErrorAlert'
+import { ExtractActions } from '@/components/ExtractActions'
 import { Header } from '@/components/Header'
 import { PrivacyNote } from '@/components/PrivacyNote'
+import { ResultPanel } from '@/components/ResultPanel'
+import { ResultSkeleton } from '@/components/ResultSkeleton'
 import { SamplePicker } from '@/components/SamplePicker'
 import { UploadZone } from '@/components/UploadZone'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext'
-import { validateFile, type FileProblem } from '@/lib/files'
+import { useExtraction } from '@/hooks/useExtraction'
 
 function Shell() {
   const { t } = useLanguage()
-  const [file, setFile] = useState<File | null>(null)
-  const [problem, setProblem] = useState<FileProblem | null>(null)
+  const flow = useExtraction()
+
+  // Keyboard focus follows the flow: the control that had it may have just disappeared (design FD6).
+  useEffect(() => {
+    if (!flow.focus) return
+    const selector = flow.focus.target === 'extract' ? '[data-action="extract"]' : '[data-dropzone]'
+    document.querySelector<HTMLElement>(selector)?.focus()
+  }, [flow.focus])
 
   // A file dropped outside the zone would make the browser navigate to it and lose the page.
   useEffect(() => {
@@ -25,17 +35,6 @@ function Shell() {
       window.removeEventListener('drop', stop)
     }
   }, [])
-
-  function handleFile(next: File) {
-    const found = validateFile(next)
-    setProblem(found)
-    if (!found) setFile(next)
-  }
-
-  function handleRemove() {
-    setFile(null)
-    setProblem(null)
-  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -61,13 +60,19 @@ function Shell() {
               <CardDescription>{t('documentDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {file ? (
-                <DocumentPreview file={file} onRemove={handleRemove} />
+              {flow.file ? (
+                <DocumentPreview file={flow.file} onRemove={flow.removeFile} />
               ) : (
-                <UploadZone onFile={handleFile} problem={problem} />
+                <UploadZone onFile={flow.selectFile} problem={flow.problem} />
               )}
-              <SamplePicker onSample={handleFile} />
+              <SamplePicker onSample={flow.selectFile} />
               <PrivacyNote />
+              <ExtractActions
+                status={flow.status}
+                onExtract={() => void flow.extract()}
+                onCancel={flow.cancel}
+                onNew={flow.removeFile}
+              />
             </CardContent>
           </Card>
 
@@ -76,14 +81,26 @@ function Shell() {
               <CardTitle>{t('resultTitle')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="py-12 text-center text-sm text-muted-foreground">{t('resultEmpty')}</p>
+              {flow.status === 'success' && flow.result ? (
+                <ResultPanel key={flow.runId} result={flow.result} />
+              ) : flow.status === 'extracting' ? (
+                <ResultSkeleton />
+              ) : flow.status === 'error' && flow.error ? (
+                <ErrorAlert error={flow.error} />
+              ) : (
+                <p className="py-12 text-center text-sm text-muted-foreground">
+                  {flow.status === 'ready' ? t('resultReady') : t('resultEmpty')}
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>
       </main>
 
-      {/* Announces extracting, done and failed to assistive technology (F11). Filled in F-T9. */}
-      <div role="status" aria-live="polite" className="sr-only" />
+      {/* Announces choosing a file, extracting, done, failed and cancelled to assistive technology (F11). */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {flow.announce ? t(flow.announce.key, flow.announce.params) : ''}
+      </div>
     </div>
   )
 }
