@@ -16,7 +16,7 @@ const en = {
   // intro
   introTitle: 'Extract data from payment documents',
   introSubtitle:
-    'Upload an invoice, boleto, receipt or another type of payment document and get structured data with a confidence score for each field.',
+    'Upload an invoice, boleto, receipt or waybill, as a PDF, JPEG or PNG, and get structured data with a confidence score for each field.',
   // layout
   skipToContent: 'Skip to content',
   documentTitle: 'Document',
@@ -109,7 +109,7 @@ export type TranslationKey = keyof Dict
 const pt: Dict = {
   introTitle: 'Extraia dados de documentos de pagamento',
   introSubtitle:
-    'Envie uma fatura, boleto, recibo ou outro tipo de documento de pagamento e receba os dados estruturados com um índice de confiança para cada campo.',
+    'Envie uma fatura, boleto, recibo ou conhecimento de transporte, em PDF, JPEG ou PNG, e receba os dados estruturados com um índice de confiança para cada campo.',
   skipToContent: 'Ir para o conteúdo',
   documentTitle: 'Documento',
   documentDescription: 'Escolha um arquivo para extrair os dados.',

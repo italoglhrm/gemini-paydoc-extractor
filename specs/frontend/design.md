@@ -12,7 +12,7 @@ One page, no router, no global store. A header, a short intro, and two cards sid
 │ ▣ PayDoc Extractor                                          ⊕ PT     │  header
 ├──────────────────────────────────────────────────────────────────────┤
 │  Extract data from payment documents                                 │  intro
-│  Upload an invoice, boleto, receipt or another payment document.     │
+│  Upload an invoice, boleto, receipt or waybill (PDF, JPEG or PNG).   │
 │                                                                      │
 │  ┌─ Document ───────────────────┐  ┌─ Result ───────────────────────┐│
 │  │ ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐      │  │ [Invoice]       Overall (80%)  ││
