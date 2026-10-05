@@ -26,7 +26,7 @@ Upload an invoice, boleto, receipt or waybill and get its data back as structure
 
 ### About
 
-PayDoc Extractor reads payment documents with a multimodal model instead of OCR rules. You send one PDF or image, Gemini classifies it (invoice, boleto, receipt, waybill, or unknown), pulls out six fields (vendor, document number, issue date, due date, total amount, currency), and scores how clearly each one was stated. The API then computes an overall confidence and lists the fields that deserve a human look.
+PayDoc Extractor reads payment documents with a multimodal model. You send one PDF or image, Gemini classifies it (invoice, boleto, receipt, waybill, or unknown), pulls out six fields (vendor, document number, issue date, due date, total amount, currency), and scores how clearly each one was stated. The API then computes an overall confidence and lists the fields that deserve a human look.
 
 It is a portfolio project meant to show a complete slice of work with generative AI in an application: schema-constrained model output, a prompt written against confidently wrong answers, confidence handled by the application instead of trusted blindly, a typed React client, and a bilingual interface. It was built spec-first, and the requirements, design and task lists are in [`specs/`](specs). Nothing is stored: the file goes to the model and the result goes back to the browser.
 
