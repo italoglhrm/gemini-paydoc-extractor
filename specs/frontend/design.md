@@ -1,7 +1,7 @@
 # Frontend design
 
 > **Step 2 of 3 in the frontend spec chain:** [requirements](requirements.md) (WHAT) → design (HOW) → [tasks](tasks.md) (DO).
-> Every decision cites the requirement(s) it serves (`F1`-`F13`, and `R15` from the backend).
+> Every decision cites the requirement(s) it serves (`F1`-`F15`, and `R15` from the backend).
 
 ## Overview
 
@@ -12,16 +12,17 @@ One page, no router, no global store. A header, a short intro, and two cards sid
 │ ▣ PayDoc Extractor                                          ⊕ PT     │  header
 ├──────────────────────────────────────────────────────────────────────┤
 │  Extract data from payment documents                                 │  intro
-│  Upload an invoice, boleto, receipt or waybill. Get structured JSON. │
+│  Upload an invoice, boleto, receipt or waybill. Get structured data. │
 │                                                                      │
 │  ┌─ Document ───────────────────┐  ┌─ Result ───────────────────────┐│
-│  │ ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐  │  │ [Invoice]          Overall 100%││
-│  │ │  drop a file or browse   │  │  │ ⚠ 1 field needs review: …      ││
-│  │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘  │  │ [Fields] [JSON]                ││
-│  │  (preview replaces the zone) │  │ Field        Value   Confidence││
-│  │  [ Try a sample ▾ ]          │  │ ──────────────────────────────  ││
-│  │  ⓘ sent to Google Gemini…    │  │ Vendor       Nimbus… ▬▬▬▬ 100% ││
-│  │  [ Extract ]                 │  │ Due date     Apr 13  ▬▬▬▬ 100% ││
+│  │ ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐      │  │ [Invoice]       Overall (80%)  ││
+│  │ │  drop a file or browse │   │  │ ⚠ 2 fields need review         ││
+│  │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘      │  │ Field     Value   Confidence   ││
+│  │ (the preview replaces it)    │  │ ─────────────────────────────  ││
+│  │ [ Try a sample ▾ ]           │  │ Vendor    Nimbus…  ▬▬▬▬▬ 100%  ││
+│  │ ⓘ sent to Google Gemini…     │  │ Due date  Apr 13   ▬▬▬ 62%     ││
+│  │ [ Extract ]                  │  │ ● High  ● Medium  ● Low        ││
+│  │                              │  │                                ││
 │  └──────────────────────────────┘  └────────────────────────────────┘│
 └──────────────────────────────────────────────────────────────────────┘
 ```
@@ -30,7 +31,7 @@ One page, no router, no global store. A header, a short intro, and two cards sid
 
 ### FD1. Stack and project layout
 
-Vite, React 19, TypeScript (`strict`), Tailwind CSS 3.4 and npm, in `frontend/`, on Node 22. This is MyAgenda's stack. The versions were re-checked when scaffolding (MyAgenda is on Vite 5.4): Vite 8, `@vitejs/plugin-react` 6, TypeScript 7, React 19.3, Tailwind 3.4.19. Tailwind stays on 3.x, so `tailwind-merge` stays on 2.x (3.x targets Tailwind 4 class names). `react` and `react-dom` are declared explicitly instead of arriving as peer dependencies. The API base URL comes from `VITE_API_URL` (default `http://localhost:8000`); the dev server runs on `5173`, the default allowed origin in R15, pinned with `strictPort` so it cannot drift to another port and break CORS silently. *(F7, F13)*
+Vite, React 19, TypeScript (`strict`), Tailwind CSS 3.4 and npm, in `frontend/`, on Node 22. This is MyAgenda's stack. The versions were re-checked when scaffolding (MyAgenda is on Vite 5.4): Vite 8, `@vitejs/plugin-react` 6, TypeScript 7, React 19.3, Tailwind 3.4.19. Tailwind stays on 3.x, so `tailwind-merge` stays on 2.x (3.x targets Tailwind 4 class names). `react` and `react-dom` are declared explicitly instead of arriving as peer dependencies. The API base URL comes from `VITE_API_URL` (default `http://localhost:8000`); the dev server runs on `5173`, the default allowed origin in R15, pinned with `strictPort` so it cannot drift to another port and break CORS silently. The overall confidence chart uses Recharts, loaded on demand so the first paint does not pay for it (FD7). *(F7, F13, F15)*
 
 ```
 frontend/
@@ -38,19 +39,20 @@ frontend/
   vite.config.ts  tailwind.config.js  postcss.config.js  .env.example
   src/
     main.tsx  App.tsx  index.css  types.ts
-    lib/        utils.ts (cn)  api.ts  i18n.ts  format.ts  samples.ts
+    lib/        utils.ts (cn)  api.ts  i18n.ts  format.ts  samples.ts  files.ts  labels.ts  confidence.ts
     contexts/   LanguageContext.tsx
     hooks/      useExtraction.ts
     components/
-      ui/       button badge card alert table tabs progress skeleton
-                separator tooltip dropdown-menu sonner
+      ui/       button badge card alert table progress skeleton
+                separator tooltip dropdown-menu
       Header  LanguageToggle  LogoIcon  UploadZone  DocumentPreview  PrivacyNote
-      SamplePicker  ResultPanel  OverallConfidence  FieldsTable  RawJson  ErrorAlert
+      SamplePicker  ExtractActions  ResultSkeleton  ErrorAlert
+      ResultPanel  OverallConfidence  ConfidenceGauge  ConfidenceLegend  FieldsTable
 ```
 
 ### FD2. Design system: shadcn/ui, light theme only
 
-Components follow shadcn/ui's reference sources in the `new-york` style (denser and sharper than `default`), built on Radix primitives, `class-variance-authority`, `clsx` and `tailwind-merge` (`cn()`), with Lucide icons and Inter. A `components.json` is kept and verified to work: the shadcn CLI (4.x) accepts it for this Tailwind 3.4 setup and emits the classic `new-york` sources (checked with `add button --dry-run`), so the primitives are generated with the CLI rather than ported by hand. `tailwindcss-animate` supplies the `animate-in` classes the Radix components use. The Sonner wrapper is pinned to the light theme (no `next-themes`). *(F13)*
+Components follow shadcn/ui's reference sources in the `new-york` style (denser and sharper than `default`), built on Radix primitives, `class-variance-authority`, `clsx` and `tailwind-merge` (`cn()`), with Lucide icons and Inter. A `components.json` is kept and verified to work: the shadcn CLI (4.x) accepts it for this Tailwind 3.4 setup and emits the classic `new-york` sources (checked with `add button --dry-run`), so the primitives are generated with the CLI rather than ported by hand. `tailwindcss-animate` supplies the `animate-in` classes the Radix components use. *(F13)*
 
 Tokens are CSS variables in `:root`, stored as HSL channels so opacity modifiers (`bg-primary/10`) work, and exposed through `tailwind.config.js` in shadcn's vocabulary. The palette is MyAgenda's. Contrast was measured with WCAG 2.x formulas:
 
@@ -61,13 +63,13 @@ Tokens are CSS variables in `:root`, stored as HSL channels so opacity modifiers
 | `card`, `popover` | `#FFFFFF` | surfaces | |
 | `muted` | `#F2F2F0` | quiet surfaces: table header, code block, skeleton (derived) | `muted-foreground` on it 4.78:1 |
 | `muted-foreground` | `#6B6B66` | secondary text | 5.08:1 on `background`, 5.36:1 on `card` |
-| `primary` | `#534AB7` | primary action, selected state, focus ring, bar fill | white on it 6.93:1; ring 6.58:1 on `background` |
+| `primary` | `#534AB7` | primary action, selected state, focus ring | white on it 6.93:1; ring 6.58:1 on `background` |
 | `primary-foreground` | `#FFFFFF` | text on `primary` | |
 | `accent` | `#EEEDFB` | hover and selected tint | `accent-foreground` (`#534AB7`) on it 5.99:1 |
 | `secondary` | `#F2F2F0` | secondary button surface (derived) | `foreground` on it 15.3:1 |
-| `destructive` | `#A32D2D` on soft `#FCEBEB` | errors | 6.13:1 text on soft; white on `destructive` 7.07:1 |
-| `warning` | `#854F0B` on soft `#FAEEDA` | needs review | 5.87:1 |
-| `success` | `#3B6D11` on soft `#EAF3DE` | "copied" confirmation | 5.43:1 |
+| `destructive` | `#A32D2D` on soft `#FCEBEB` | errors; low confidence | 6.13:1 text on soft; white on `destructive` 7.07:1 |
+| `warning` | `#854F0B` on soft `#FAEEDA` | needs review; medium confidence | 5.87:1 |
+| `success` | `#3B6D11` on soft `#EAF3DE` | high confidence | 5.43:1 |
 | `border`, `input` | `#E4E4E0` | hairlines | decorative, see below |
 | `ring` | `#534AB7` | focus indicator | |
 | `radius` | `0.5rem` | corners | |
@@ -75,10 +77,10 @@ Tokens are CSS variables in `:root`, stored as HSL channels so opacity modifiers
 Rules that follow from the measurements:
 
 - No color literals in components: everything is a token (checked by search, see FD12).
-- Hairline borders (`#E4E4E0`, about 1.2:1) are decorative. No control is identified by its border alone: buttons, tabs, the drop zone and the dropdown always carry text or an icon at 4.5:1 or better.
+- Hairline borders (`#E4E4E0`, about 1.2:1) are decorative. No control is identified by its border alone: buttons, the drop zone and the dropdown always carry text or an icon at 4.5:1 or better.
 - `muted-foreground` is never placed on a `border`-colored fill (4.20:1).
-- A confidence bar's fill is the `primary` or `warning` token itself (5.43:1 and 5.28:1 against the track). A lighter amber would drop to 2.86:1. The percentage is always printed next to the bar, and a flagged row also carries a "Review" badge, so color is never the only signal.
-- Restraint: indigo only for the primary action, focus and selection; status colors only where they mean something; no gradients, no glass effects beyond a subtle header blur, no decorative backgrounds, no emoji; `shadow-sm` on cards and on the active tab, shadcn's standard popover shadow on floating layers (dropdown, tooltip, toasts), and nowhere else (buttons and badges are flat); spacing on a 4/8 px grid.
+- A confidence bar's fill is the token of its level, `success`, `warning` or `destructive`: 4.87, 5.28 and 5.55:1 against the bar track (`border`), and 6.21, 6.73 and 7.07:1 as text on the card. A lighter amber would drop to 2.86:1 against the track. The percentage is always printed next to the bar and the legend names each level, so color is never the only signal.
+- Restraint: indigo only for the primary action, focus and selection; status colors only where they mean something; no gradients, no glass effects beyond a subtle header blur, no decorative backgrounds, no emoji; `shadow-sm` on cards, shadcn's standard popover shadow on floating layers (dropdown, tooltip), and nowhere else (buttons and badges are flat); spacing on a 4/8 px grid.
 - **Dark theme (deferred):** adding it later means a `.dark` block. MyAgenda's own dark primary `#7B73E4` fails AA (white on it is 3.88:1, and as text on cards 4.49:1), so the dark set would use `#8B83F4` with near-black text on it (5.98:1).
 
 Typography: Inter, as a variable font self-hosted through `@fontsource-variable/inter`, so no request goes to a font CDN (fitting for a UI that talks about privacy). Intro heading 24 px semibold with tight tracking, card titles 16 px, labels 12-13 px in `muted-foreground`, values 14-15 px, `tabular-nums` for amounts and percentages.
@@ -123,13 +125,14 @@ Choosing another file or a sample from any state returns to `ready` and clears t
 
 ### FD7. Result panel
 
-*(F4, F5, F12, F13)*
+*(F4, F5, F13, F14, F15)*
 
-- **Header:** the document type as a `Badge` (localized) and the overall confidence as a percentage with a slim `Progress`.
+- **Header:** the document type as a `Badge` (localized) on the left and, on the right, the overall confidence gauge.
+- **Overall confidence gauge (F15):** a Recharts radial chart (`RadialBarChart` with one `RadialBar` on a 0-100 domain), about 96 px across: a ring whose arc spans the percentage, on a `border`-colored track, with the percentage in large `tabular-nums` type at its center and the level word (High, Medium, Low) beside it, both in the level's color. The percentage is real text and not part of the SVG, and the chart is hidden from assistive technology behind one `role="img"` label such as "Overall confidence: 80%, medium". The arc takes its color from the level through `currentColor`, so it stays token-driven. Recharts is the heaviest dependency, so the chart is loaded on demand (`React.lazy`) with a plain ring of the same size as the placeholder; the number is shown at once. The arc animates on arrival unless the user prefers reduced motion.
 - **Review alert:** when `low_confidence_fields` is not empty, a `warning` `Alert` titled "N field(s) need review" that names the fields (localized). Nothing is shown when the list is empty.
-- **Tabs:** *Fields* (default) and *JSON*.
-- **Fields tab:** a `Table` with the columns Field, Value and Confidence, fine row dividers and no boxed rows. Each row shows the label, the formatted value and a slim `Progress` with the percentage. A field in `low_confidence_fields` gets the `warning` fill and a "Review" `Badge`. **The review state comes only from `low_confidence_fields`**, so the UI cannot disagree with the server's threshold. A `null` value shows "Not found" in `muted-foreground`, and its confidence cell shows "—" because a score for an absent value says nothing useful.
-- **JSON tab:** the response pretty-printed in a monospace block on `muted`, scrollable, with a Copy button (Clipboard API) and a Sonner confirmation.
+- **Fields:** a `Table` with the columns Field, Value and Confidence, fine row dividers and no boxed rows (a stacked list below `sm`). Each row shows the label, the formatted value, a slim `Progress` bar and the percentage, both in the color of the score's level. A field in `low_confidence_fields` also gets a "Review" `Badge`. A `null` value shows "Not found" in `muted-foreground`, and its confidence cell shows "—" because a score for an absent value says nothing useful.
+- **Confidence levels (F14):** taken from the rounded percentage, so the number on screen and the color always agree: **high** 90% or more (`success`), **medium** 70% to 89% (`warning`), **low** below 70% (`destructive`). A legend under the fields names the three levels with their ranges. The bands follow the extraction prompt's own scale (clearly stated 0.9-1.0, partial 0.5-0.8) and the server's default threshold of 0.7, but they are a display aid only: **whether a field needs review comes only from `low_confidence_fields`**, so the UI cannot disagree with the server if its threshold is changed. The "Review" badge takes the color of the field's level.
+- The raw JSON view and its copy button were dropped (F12 withdrawn), so there are no tabs and no toasts.
 
 Formatting, with the locale `en-US` or `pt-BR` following the language:
 
@@ -184,5 +187,7 @@ Formatting, with the locale `en-US` or `pt-BR` following the language:
 | F9  | FD10 |
 | F10 | FD6, FD9 |
 | F11 | FD3, FD4, FD6, FD12 |
-| F12 | FD7 |
+| F12 | withdrawn (see FD7) |
 | F13 | FD1, FD2, FD3, FD7, FD12 |
+| F14 | FD2, FD7 |
+| F15 | FD1, FD7 |

@@ -31,10 +31,20 @@
 - [x] **F-T8** Result panel — *F4, F5, F12, F13* · design FD7
   - `ResultPanel`, `OverallConfidence`, `FieldsTable`, `RawJson`.
   - Done when: the six fields, their confidence and the overall confidence show; exactly the fields in `low_confidence_fields` are flagged; a null value reads "Not found"; dates and amounts follow the FD7 formatting rules; the JSON tab copies.
+  - Superseded in part: F-T10 removes the JSON tab, and F-T11 and F-T12 change how confidence is shown.
 - [x] **F-T9** Extraction flow and error states — *F3, F6, F11* · design FD6, FD5
   - `useExtraction`, the skeleton state, Cancel, Retry, New document, `ErrorAlert`, and the live-region messages.
   - Done when: every transition in the FD6 diagram works, each error kind shows its own localized message, and state changes are announced.
-- [ ] **F-T10** End-to-end and visual verification — *F1-F13* · design FD12
+- [ ] **F-T10** Remove the JSON view — *F12 withdrawn* · design FD7
+  - Remove the JSON tab, the raw JSON component and the copy button, and with them what only they used: the Tabs and Sonner primitives, the toaster, their dependencies and their dictionary entries. The fields table is shown directly.
+  - Done when: the result shows no tabs, JSON view or copy control, nothing else regresses, and no code, dictionary key or dependency left behind refers to them.
+- [ ] **F-T11** Confidence levels — *F14* · design FD2, FD7
+  - `lib/confidence.ts` (the bands and the style of each level), colored bars and percentages in the fields table, the legend, the Review badge in the color of its level, and the dictionary entries in both languages.
+  - Done when: every score shows in the color of its level on the rounded percentage (the 69/70 and 89/90 boundaries checked), the legend names the three levels with their ranges, a field is flagged only if it is in `low_confidence_fields`, and the contrast figures in FD2 hold.
+- [ ] **F-T12** Overall confidence gauge — *F15* · design FD1, FD7
+  - Recharts added, `ConfidenceGauge` loaded on demand, and `OverallConfidence` rebuilt around it with a same-size placeholder, the level word, an accessible label and reduced-motion handling.
+  - Done when: the chart draws the percentage as an arc in its level's color with the number at its center, the number is readable text before and without the chart, a screen reader gets one label, motion is off for users who prefer reduced motion, and the chart code is a separate chunk fetched only after the first result.
+- [ ] **F-T13** End-to-end and visual verification — *F1-F11, F13-F15* · design FD12
   - The seven samples through the UI against the live API, error paths, both languages, 375 px, keyboard-only path, the contrast recomputation, and the screenshot review.
   - Done when: every sample matches its known answers in the UI, every FD12 check passes, and screenshots of both languages are kept for the README.
 
@@ -44,16 +54,18 @@ The README (backend T12) follows this chain, once real screenshots exist.
 
 | Req | Tasks |
 | --- | ----- |
-| F1  | F-T6, F-T10 |
-| F2  | F-T6, F-T10 |
-| F3  | F-T3, F-T9, F-T10 |
-| F4  | F-T8, F-T10 |
-| F5  | F-T8, F-T10 |
-| F6  | F-T3, F-T9, F-T10 |
-| F7  | F-T1, F-T4, F-T10 |
-| F8  | F-T6, F-T10 |
-| F9  | F-T7, F-T10 |
-| F10 | F-T6, F-T10 |
-| F11 | F-T5, F-T6, F-T9, F-T10 |
-| F12 | F-T8, F-T10 |
-| F13 | F-T1, F-T2, F-T5, F-T8, F-T10 |
+| F1  | F-T6, F-T13 |
+| F2  | F-T6, F-T13 |
+| F3  | F-T3, F-T9, F-T13 |
+| F4  | F-T8, F-T13 |
+| F5  | F-T8, F-T13 |
+| F6  | F-T3, F-T9, F-T13 |
+| F7  | F-T1, F-T4, F-T13 |
+| F8  | F-T6, F-T13 |
+| F9  | F-T7, F-T13 |
+| F10 | F-T6, F-T13 |
+| F11 | F-T5, F-T6, F-T9, F-T13 |
+| F12 | withdrawn (F-T10 removes the JSON view) |
+| F13 | F-T1, F-T2, F-T5, F-T8, F-T11, F-T12, F-T13 |
+| F14 | F-T11, F-T13 |
+| F15 | F-T12, F-T13 |

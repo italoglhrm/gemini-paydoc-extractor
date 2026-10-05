@@ -1,7 +1,7 @@
 # Frontend requirements
 
 > **Step 1 of 3 in the frontend spec chain:** requirements (WHAT) → [design](design.md) (HOW) → [tasks](tasks.md) (DO).
-> Same method as the backend chain in [../requirements.md](../requirements.md). IDs here are `F1`-`F13` and are never reused.
+> Same method as the backend chain in [../requirements.md](../requirements.md). IDs here are `F1`-`F15` and are never reused.
 
 ## Scope
 
@@ -19,6 +19,7 @@ It adds no capability to the backend. It shows what `POST /extract` returns and 
 - **Field**: one of the six extracted values (`vendor_name`, `document_number`, `issue_date`, `due_date`, `total_amount`, `currency`).
 - **Confidence**: the 0.0-1.0 score the API returns for each field.
 - **Needs review**: a field the API lists in `low_confidence_fields`. The server owns the threshold, so the UI never recomputes it.
+- **Confidence level**: how a score is displayed: high (90% or more), medium (70% to 89%) or low (below 70%), measured on the rounded percentage. It is a display band only; whether a field needs review is still decided by the server.
 - **Sample**: one of the synthetic documents in [samples/](../../samples/README.md).
 
 ## Backend contract this UI relies on
@@ -47,7 +48,9 @@ It adds no capability to the backend. It shows what `POST /extract` returns and 
 | F4 | WHEN the API returns a result, THE UI SHALL show the document type, the six fields with their values, the confidence of each field and the overall confidence, and SHALL mark as needing review exactly the fields listed in `low_confidence_fields`. |
 | F5 | WHERE a field's value is `null`, THE UI SHALL show it as not found, never as a blank or a zero. |
 | F6 | IF a request fails, THEN THE UI SHALL explain the cause in the active language, telling apart a missing or empty file (400), a file that is too large (413), an unsupported type (415), a failure of the extraction service (502) and an unreachable API, and SHALL let the user retry. |
-| F12 | WHEN a result is shown, THE UI SHALL let the user view the raw JSON returned by the API and copy it. |
+| F12 | *Withdrawn.* The raw JSON view and its copy action were dropped as not needed. The ID is not reused. |
+| F14 | WHEN a confidence score is shown, THE UI SHALL color it by its level (high, medium or low), SHALL explain the colors with a legend, and SHALL always print the percentage, so that color is never the only signal. |
+| F15 | THE UI SHALL show the overall confidence as a radial chart built with Recharts, with the percentage at its center and the chart colored by the same levels. |
 
 ### Privacy
 
@@ -79,6 +82,7 @@ It adds no capability to the backend. It shows what `POST /extract` returns and 
 
 - Dark theme. Deferred: it is not needed for this system. The tokens are CSS variables, so a dark set can be added later (see FD2 for what it would need).
 - Editing or correcting extracted values, export (CSV, Excel), history, accounts, review or approval flows (R13).
+- Viewing or copying the raw JSON response (withdrawn, F12).
 - Deployment and hosting of the UI or the API.
 - Highlighting fields on top of the document image.
 - Languages other than English and Portuguese (Brazil).
