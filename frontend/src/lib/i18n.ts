@@ -32,6 +32,9 @@ const en = {
   errorUnsupportedFile: 'Only PDF, JPEG and PNG files are supported.',
   errorEmptyFile: 'This file is empty.',
   errorFileTooLarge: 'The file is larger than {max} MB.',
+  // privacy
+  privacyNote:
+    "The file is sent to Google Gemini for extraction. On the free tier Google may use submitted content, so don't upload sensitive documents.",
   // language toggle (describes what clicking does)
   switchLanguage: 'Switch to Portuguese',
 } as const
@@ -56,6 +59,8 @@ const pt: Dict = {
   errorUnsupportedFile: 'Apenas arquivos PDF, JPEG e PNG são aceitos.',
   errorEmptyFile: 'Este arquivo está vazio.',
   errorFileTooLarge: 'O arquivo é maior que {max} MB.',
+  privacyNote:
+    'O arquivo é enviado ao Google Gemini para a extração. No plano gratuito, o Google pode usar o conteúdo enviado; por isso, não envie documentos sensíveis.',
   switchLanguage: 'Mudar para inglês',
 }
 

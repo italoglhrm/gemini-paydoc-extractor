@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { DocumentPreview } from '@/components/DocumentPreview'
 import { Header } from '@/components/Header'
+import { PrivacyNote } from '@/components/PrivacyNote'
 import { UploadZone } from '@/components/UploadZone'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { TooltipProvider } from '@/components/ui/tooltip'
@@ -57,12 +58,13 @@ function Shell() {
               <CardTitle>{t('documentTitle')}</CardTitle>
               <CardDescription>{t('documentDescription')}</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               {file ? (
                 <DocumentPreview file={file} onRemove={handleRemove} />
               ) : (
                 <UploadZone onFile={handleFile} problem={problem} />
               )}
+              <PrivacyNote />
             </CardContent>
           </Card>
 
