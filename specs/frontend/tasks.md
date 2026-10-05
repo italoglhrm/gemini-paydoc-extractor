@@ -38,7 +38,7 @@
 - [x] **F-T10** Remove the JSON view — *F12 withdrawn* · design FD7
   - Remove the JSON tab, the raw JSON component and the copy button, and with them what only they used: the Tabs and Sonner primitives, the toaster, their dependencies and their dictionary entries. The fields table is shown directly.
   - Done when: the result shows no tabs, JSON view or copy control, nothing else regresses, and no code, dictionary key or dependency left behind refers to them.
-- [ ] **F-T11** Confidence levels — *F14* · design FD2, FD7
+- [x] **F-T11** Confidence levels — *F14* · design FD2, FD7
   - `lib/confidence.ts` (the bands and the style of each level), colored bars and percentages in the fields table, the legend, the Review badge in the color of its level, and the dictionary entries in both languages.
   - Done when: every score shows in the color of its level on the rounded percentage (the 69/70 and 89/90 boundaries checked), the legend names the three levels with their ranges, a field is flagged only if it is in `low_confidence_fields`, and the contrast figures in FD2 hold.
 - [ ] **F-T12** Overall confidence gauge — *F15* · design FD1, FD7

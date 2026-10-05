@@ -1,9 +1,12 @@
+import { ConfidenceLegend } from '@/components/ConfidenceLegend'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { confidenceLevel, LEVEL_STYLE, percentOf, type ConfidenceLevel } from '@/lib/confidence'
 import { formatAmount, formatDate, formatPercent } from '@/lib/format'
 import { FIELD_LABEL } from '@/lib/labels'
+import { cn } from '@/lib/utils'
 import { FIELD_NAMES, type DocumentData, type ExtractResponse, type FieldName } from '@/types'
 
 interface Row {
@@ -14,7 +17,8 @@ interface Row {
   /** Small note after the value, e.g. "currency unknown". */
   hint: string | null
   score: number
-  /** From `low_confidence_fields` only: the server owns the threshold (design FD7). */
+  level: ConfidenceLevel
+  /** From `low_confidence_fields` only: the server owns the review threshold (design FD7). */
   flagged: boolean
 }
 
@@ -40,18 +44,19 @@ function display(name: FieldName, data: DocumentData, locale: string, unknownCur
   }
 }
 
-function ConfidenceBar({ row, locale }: { row: Row; locale: string }) {
+/** Bar and percentage, both in the color of the score's level (F14). */
+function ConfidenceBar({ row, locale, levelName }: { row: Row; locale: string; levelName: string }) {
   const percent = formatPercent(row.score, locale)
-  const fill = Math.min(100, Math.max(0, Math.round(row.score * 100)))
+  const style = LEVEL_STYLE[row.level]
   return (
     <div className="flex min-w-0 flex-1 items-center gap-2">
       <Progress
-        value={fill}
-        aria-label={`${row.label}: ${percent}`}
+        value={percentOf(row.score)}
+        aria-label={`${row.label}: ${percent} (${levelName})`}
         className="h-1.5 flex-1"
-        indicatorClassName={row.flagged ? 'bg-warning' : undefined}
+        indicatorClassName={style.bar}
       />
-      <span className="w-10 shrink-0 text-right text-xs tabular-nums text-muted-foreground">{percent}</span>
+      <span className={cn('w-10 shrink-0 text-right text-xs font-medium tabular-nums', style.text)}>{percent}</span>
     </div>
   )
 }
@@ -65,6 +70,7 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
     label: t(FIELD_LABEL[name]),
     ...display(name, result.data, locale, t('currencyUnknown')),
     score: result.confidence[name],
+    level: confidenceLevel(result.confidence[name]),
     flagged: result.low_confidence_fields.includes(name),
   }))
 
@@ -83,8 +89,14 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
       </>
     )
 
+  const reviewBadge = (row: Row) => (
+    <Badge variant={LEVEL_STYLE[row.level].badge}>{t('review')}</Badge>
+  )
+  // `data-level` exists only for a value that was found: a score for an absent value says nothing.
+  const levelAttr = (row: Row) => (row.value === null ? undefined : row.level)
+
   return (
-    <>
+    <div className="space-y-4">
       <div className="hidden sm:block" data-layout="table">
         <Table>
           <TableHeader>
@@ -96,7 +108,12 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
           </TableHeader>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.name} data-field={row.name} data-flagged={row.flagged || undefined}>
+              <TableRow
+                key={row.name}
+                data-field={row.name}
+                data-level={levelAttr(row)}
+                data-flagged={row.flagged || undefined}
+              >
                 <TableCell className="font-medium">{row.label}</TableCell>
                 <TableCell className="break-words">{valueOf(row)}</TableCell>
                 <TableCell>
@@ -104,9 +121,9 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
                     <span className="text-muted-foreground">—</span>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <ConfidenceBar row={row} locale={locale} />
+                      <ConfidenceBar row={row} locale={locale} levelName={t(LEVEL_STYLE[row.level].label)} />
                       {/* A fixed slot, so every row's bar has the same length whether or not it is flagged. */}
-                      <span className="flex w-16 shrink-0">{row.flagged && <Badge variant="warning">{t('review')}</Badge>}</span>
+                      <span className="flex w-16 shrink-0">{row.flagged && reviewBadge(row)}</span>
                     </div>
                   )}
                 </TableCell>
@@ -118,16 +135,26 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
 
       <ul className="divide-y sm:hidden" data-layout="list">
         {rows.map((row) => (
-          <li key={row.name} data-field={row.name} data-flagged={row.flagged || undefined} className="space-y-1.5 py-3 first:pt-0 last:pb-0">
+          <li
+            key={row.name}
+            data-field={row.name}
+            data-level={levelAttr(row)}
+            data-flagged={row.flagged || undefined}
+            className="space-y-1.5 py-3 first:pt-0 last:pb-0"
+          >
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs text-muted-foreground">{row.label}</span>
-              {row.flagged && <Badge variant="warning">{t('review')}</Badge>}
+              {row.flagged && reviewBadge(row)}
             </div>
             <div className="break-words text-sm font-medium">{valueOf(row)}</div>
-            {row.value !== null && <ConfidenceBar row={row} locale={locale} />}
+            {row.value !== null && (
+              <ConfidenceBar row={row} locale={locale} levelName={t(LEVEL_STYLE[row.level].label)} />
+            )}
           </li>
         ))}
       </ul>
-    </>
+
+      <ConfidenceLegend />
+    </div>
   )
 }
