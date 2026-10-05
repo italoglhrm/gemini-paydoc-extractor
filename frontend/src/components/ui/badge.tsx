@@ -17,6 +17,8 @@ const badgeVariants = cva(
         outline: "text-foreground",
         // Added for this app: the "Review" flag on a field (design FD7).
         warning: "border-warning/30 bg-warning-soft text-warning",
+        // Added for this app: the Review flag on a low-confidence field (design FD7).
+        danger: "border-destructive/30 bg-destructive-soft text-destructive",
       },
     },
     defaultVariants: {
