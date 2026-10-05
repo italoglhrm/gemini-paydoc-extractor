@@ -1,9 +1,10 @@
-<!-- Brand mark: a page with two lines of text, no container square. Same path as src/components/LogoIcon.tsx. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="5.5 6 21 21">
+<!-- Brand mark: a page with two lines of text and a sparkle, no container square. Same paths as src/components/LogoIcon.tsx. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6.3 3.4 23 23">
   <style>
     path { fill: #534AB7; }
     /* browser tab strips can be dark: use the lighter purple of the dark palette there (design FD2) */
     @media (prefers-color-scheme: dark) { path { fill: #8B83F4; } }
   </style>
   <path fill-rule="evenodd" d="M10 7h8l5 5v13a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM12.8 16h6.4a.8.8 0 0 1 0 1.6h-6.4a.8.8 0 0 1 0-1.6zM12.8 19.5h6.4a.8.8 0 0 1 0 1.6h-6.4a.8.8 0 0 1 0-1.6z"/>
+  <path d="M23.4 3.8Q24.1 6.3 26.6 7Q24.1 7.7 23.4 10.2Q22.7 7.7 20.2 7Q22.7 6.3 23.4 3.8Z"/>
 </svg>
