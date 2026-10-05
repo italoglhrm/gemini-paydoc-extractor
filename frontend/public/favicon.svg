@@ -1,0 +1,11 @@
+<!-- Brand mark: a receipt with one field lifted out of it. Same shapes as src/components/LogoIcon.tsx. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#534AB7"/>
+  <svg x="4" y="4" width="24" height="24" viewBox="3.45 1.5 21 21">
+    <path fill="#fff" d="M5 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v15l-1.5 2-1.5-2-1.5 2-1.5-2-1.5 2-1.5-2-1.5 2-1.5-2V4z"/>
+    <rect fill="#534AB7" x="7.5" y="6.3" width="6" height="1.6" rx="0.8"/>
+    <rect fill="#534AB7" x="7.5" y="15.6" width="7.5" height="1.6" rx="0.8"/>
+    <rect fill="#534AB7" x="11.6" y="8.6" width="11.8" height="5.4" rx="1.6"/>
+    <rect fill="#fff" x="12.6" y="9.6" width="9.8" height="3.4" rx="0.9"/>
+  </svg>
+</svg>
