@@ -41,7 +41,7 @@
 - [x] **F-T11** Confidence levels — *F14* · design FD2, FD7
   - `lib/confidence.ts` (the bands and the style of each level), colored bars and percentages in the fields table, the legend, the Review badge in the color of its level, and the dictionary entries in both languages.
   - Done when: every score shows in the color of its level on the rounded percentage (the 69/70 and 89/90 boundaries checked), the legend names the three levels with their ranges, a field is flagged only if it is in `low_confidence_fields`, and the contrast figures in FD2 hold.
-- [ ] **F-T12** Overall confidence gauge — *F15* · design FD1, FD7
+- [x] **F-T12** Overall confidence gauge — *F15* · design FD1, FD7
   - Recharts added, `ConfidenceGauge` loaded on demand, and `OverallConfidence` rebuilt around it with a same-size placeholder, the level word, an accessible label and reduced-motion handling.
   - Done when: the chart draws the percentage as an arc in its level's color with the number at its center, the number is readable text before and without the chart, a screen reader gets one label, motion is off for users who prefer reduced motion, and the chart code is a separate chunk fetched only after the first result.
 - [ ] **F-T13** End-to-end and visual verification — *F1-F11, F13-F15* · design FD12
