@@ -9,7 +9,6 @@ import { ResultSkeleton } from '@/components/ResultSkeleton'
 import { SamplePicker } from '@/components/SamplePicker'
 import { UploadZone } from '@/components/UploadZone'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext'
 import { useExtraction } from '@/hooks/useExtraction'
@@ -110,7 +109,6 @@ export default function App() {
     <LanguageProvider>
       <TooltipProvider>
         <Shell />
-        <Toaster />
       </TooltipProvider>
     </LanguageProvider>
   )

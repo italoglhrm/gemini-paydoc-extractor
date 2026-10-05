@@ -35,7 +35,7 @@
 - [x] **F-T9** Extraction flow and error states — *F3, F6, F11* · design FD6, FD5
   - `useExtraction`, the skeleton state, Cancel, Retry, New document, `ErrorAlert`, and the live-region messages.
   - Done when: every transition in the FD6 diagram works, each error kind shows its own localized message, and state changes are announced.
-- [ ] **F-T10** Remove the JSON view — *F12 withdrawn* · design FD7
+- [x] **F-T10** Remove the JSON view — *F12 withdrawn* · design FD7
   - Remove the JSON tab, the raw JSON component and the copy button, and with them what only they used: the Tabs and Sonner primitives, the toaster, their dependencies and their dictionary entries. The fields table is shown directly.
   - Done when: the result shows no tabs, JSON view or copy control, nothing else regresses, and no code, dictionary key or dependency left behind refers to them.
 - [ ] **F-T11** Confidence levels — *F14* · design FD2, FD7

@@ -1,15 +1,13 @@
 import { AlertTriangle } from 'lucide-react'
 import { FieldsTable } from '@/components/FieldsTable'
 import { OverallConfidence } from '@/components/OverallConfidence'
-import { RawJson } from '@/components/RawJson'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { DOCUMENT_TYPE_LABEL, FIELD_LABEL } from '@/lib/labels'
 import type { ExtractResponse } from '@/types'
 
-/** A successful extraction (design FD7). Mount it with a `key` so each result starts on the Fields tab. */
+/** A successful extraction (design FD7). */
 export function ResultPanel({ result }: { result: ExtractResponse }) {
   const { t } = useLanguage()
   const flagged = result.low_confidence_fields
@@ -33,18 +31,7 @@ export function ResultPanel({ result }: { result: ExtractResponse }) {
         </Alert>
       )}
 
-      <Tabs defaultValue="fields">
-        <TabsList>
-          <TabsTrigger value="fields">{t('tabFields')}</TabsTrigger>
-          <TabsTrigger value="json">{t('tabJson')}</TabsTrigger>
-        </TabsList>
-        <TabsContent value="fields">
-          <FieldsTable result={result} />
-        </TabsContent>
-        <TabsContent value="json">
-          <RawJson result={result} />
-        </TabsContent>
-      </Tabs>
+      <FieldsTable result={result} />
     </div>
   )
 }
