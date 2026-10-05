@@ -110,7 +110,7 @@ A `load_settings()` wrapper turns pydantic's validation error into a short messa
 
 ### D8. Dependencies and exclusions
 
-`fastapi`, `uvicorn[standard]`, `google-genai`, `pydantic`, `pydantic-settings`, `python-dotenv`, `python-multipart` (version-floored). Dev-only: `pytest`, `httpx` (for FastAPI's `TestClient`).
+`fastapi`, `uvicorn[standard]`, `google-genai`, `httpx` (imported directly, to catch transport errors), `pydantic`, `pydantic-settings` (which reads `.env` itself), `python-multipart` (version-floored). Dev-only: `pytest` (`TestClient` runs on the `httpx` above).
 
 No database, auth, queue or Docker. R13 and R14 make them unnecessary.
 
