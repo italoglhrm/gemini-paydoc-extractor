@@ -25,7 +25,7 @@
 - [x] **F-T6** Upload, validation, preview and privacy note — *F1, F2, F8, F10, F11* · design FD4, FD9
   - `UploadZone`, `DocumentPreview`, `PrivacyNote`, and the validation constants.
   - Done when: PDF, JPEG and PNG preview correctly, other types and files over 10 MB are rejected with a localized reason, the zone works by keyboard, and the object URL is revoked on replace, remove and unmount.
-- [ ] **F-T7** Sample picker — *F9* · design FD10
+- [x] **F-T7** Sample picker — *F9* · design FD10
   - `SamplePicker` and `lib/samples.ts`, with `import.meta.glob` over `samples/` and `server.fs.allow`.
   - Done when: all seven samples are listed with localized names, choosing one loads it into the preview, and the production build bundles them.
 - [ ] **F-T8** Result panel — *F4, F5, F12, F13* · design FD7

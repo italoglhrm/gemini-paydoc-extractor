@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { DocumentPreview } from '@/components/DocumentPreview'
 import { Header } from '@/components/Header'
 import { PrivacyNote } from '@/components/PrivacyNote'
+import { SamplePicker } from '@/components/SamplePicker'
 import { UploadZone } from '@/components/UploadZone'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { TooltipProvider } from '@/components/ui/tooltip'
@@ -64,6 +65,7 @@ function Shell() {
               ) : (
                 <UploadZone onFile={handleFile} problem={problem} />
               )}
+              <SamplePicker onSample={handleFile} />
               <PrivacyNote />
             </CardContent>
           </Card>
