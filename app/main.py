@@ -1,4 +1,4 @@
-"""HTTP layer (design D6): routes, input validation, error mapping, fail-fast startup."""
+"""HTTP layer: routes, input validation, error mapping, fail-fast startup."""
 
 from contextlib import asynccontextmanager
 
@@ -30,7 +30,7 @@ async def health() -> dict[str, str]:
 
 @router.post("/extract", response_model=ExtractResponse)
 async def extract(
-    # Optional in the signature so a missing part reaches our code and yields 400 (R4), not 422.
+    # Optional in the signature so a missing part reaches our code and yields 400, not 422.
     file: UploadFile | None = File(default=None),
     settings: Settings = Depends(get_settings),
     extractor: Extractor = Depends(get_extractor),
@@ -66,7 +66,7 @@ async def extract(
 def create_app(settings: Settings | None = None, extractor: Extractor | None = None) -> FastAPI:
     """Build the app. Both arguments exist so tools can build one without env vars or network."""
     # Settings are loaded when the app is built: middleware must be registered before startup and
-    # needs them. A missing key therefore stops the process here, before it serves anything (R10).
+    # needs them. A missing key therefore stops the process here, before it serves anything.
     if settings is None:
         settings = load_settings()
     if extractor is None:
@@ -84,7 +84,7 @@ def create_app(settings: Settings | None = None, extractor: Extractor | None = N
         description="Upload an invoice, boleto, receipt or waybill; get structured JSON with per-field confidence.",
         lifespan=lifespan,
     )
-    # Only the configured origins get CORS headers (R15). No credentials: there are no cookies or auth.
+    # Only the configured origins get CORS headers. No credentials: there are no cookies or auth.
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,

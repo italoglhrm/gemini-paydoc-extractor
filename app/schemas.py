@@ -1,8 +1,8 @@
-"""Data models for extraction (design D2).
+"""Data models for extraction.
 
 `ExtractionResult` is exactly what Gemini is asked to produce and doubles as its
 response schema, so the field descriptions below are part of the prompt.
-`ExtractResponse` adds the values the application computes itself (R9).
+`ExtractResponse` adds the values the application computes itself.
 """
 
 from enum import Enum
@@ -19,7 +19,7 @@ class DocumentType(str, Enum):
 
 
 class DocumentData(BaseModel):
-    """The six extracted fields. `None` means "not determined" (R7)."""
+    """The six extracted fields. `None` means "not determined"."""
 
     vendor_name: str | None = Field(
         default=None, description="Name of the vendor/payee the payment is owed to."
@@ -46,7 +46,7 @@ class DocumentData(BaseModel):
     )
     @classmethod
     def _blank_to_none(cls, value: object) -> object:
-        # A model that answers "" instead of null must not leak an empty value (R7).
+        # A model that answers "" instead of null must not leak an empty value.
         if isinstance(value, str):
             return value.strip() or None
         return value
@@ -58,7 +58,7 @@ class DocumentData(BaseModel):
 
 
 class DocumentFieldConfidence(BaseModel):
-    """One score per `DocumentData` field: how clearly it was stated (R8)."""
+    """One score per `DocumentData` field: how clearly it was stated."""
 
     vendor_name: float = Field(ge=0.0, le=1.0)
     document_number: float = Field(ge=0.0, le=1.0)
@@ -77,7 +77,7 @@ class ExtractionResult(BaseModel):
 
 
 class ExtractResponse(ExtractionResult):
-    """What `POST /extract` returns: the model's output plus app-computed summary (R9)."""
+    """What `POST /extract` returns: the model's output plus app-computed summary."""
 
     overall_confidence: float = Field(ge=0.0, le=1.0)
     low_confidence_fields: list[str]

@@ -1,4 +1,4 @@
-"""Prompts (design D5). Kept apart from the client so they can be read and tuned on their own."""
+"""Prompts. Kept apart from the client so they can be read and tuned on their own."""
 
 SYSTEM_PROMPT = """\
 You extract structured data from payment documents (invoices, boletos, receipts, waybills).

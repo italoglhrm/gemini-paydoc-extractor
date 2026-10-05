@@ -1,4 +1,4 @@
-"""Settings (design D7). Invalid or missing configuration stops the app at startup (R10)."""
+"""Settings. Invalid or missing configuration stops the app at startup."""
 
 import re
 

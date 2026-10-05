@@ -1,7 +1,7 @@
-"""Async multimodal call to Gemini (design D4).
+"""Async multimodal call to Gemini.
 
-The uploaded bytes go straight to the model as an inline `Part`; nothing is stored (R14).
-Every failure mode is re-raised as `GeminiExtractionError` so the HTTP layer maps it to 502 (R11).
+The uploaded bytes go straight to the model as an inline `Part`; nothing is stored.
+Every failure mode is re-raised as `GeminiExtractionError` so the HTTP layer maps it to 502.
 """
 
 import logging

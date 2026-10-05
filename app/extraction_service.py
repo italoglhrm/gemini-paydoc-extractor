@@ -1,6 +1,6 @@
-"""Orchestration and deterministic confidence aggregation (design D3).
+"""Orchestration and deterministic confidence aggregation.
 
-`overall_confidence` and `low_confidence_fields` are computed here, never by the model (R9).
+`overall_confidence` and `low_confidence_fields` are computed here, never by the model.
 """
 
 from typing import Protocol
@@ -17,7 +17,7 @@ class Extractor(Protocol):
 def summarize_confidence(result: ExtractionResult, threshold: float) -> tuple[float, list[str]]:
     """Return `(overall_confidence, low_confidence_fields)`.
 
-    Only fields that were actually extracted count. A null already means "not determined" (R7),
+    Only fields that were actually extracted count. A null already means "not determined",
     so it neither drags the average down nor is flagged as low confidence.
     """
     extracted = [
