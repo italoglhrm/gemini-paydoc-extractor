@@ -61,7 +61,7 @@ async function readDetail(response: Response): Promise<string | undefined> {
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null
 
 /** Minimal runtime check of the response shape, so a surprise becomes an ApiError and not a crash. */
-export function isExtractResponse(v: unknown): v is ExtractResponse {
+function isExtractResponse(v: unknown): v is ExtractResponse {
   if (!isRecord(v) || !isRecord(v.data) || !isRecord(v.confidence)) return false
   const { data, confidence } = v
   const textOrNull = (x: unknown) => x === null || typeof x === 'string'

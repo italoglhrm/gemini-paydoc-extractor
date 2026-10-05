@@ -26,7 +26,7 @@ export default {
           soft: token('destructive-soft'),
         },
         warning: { DEFAULT: token('warning'), soft: token('warning-soft') },
-        success: { DEFAULT: token('success'), soft: token('success-soft') },
+        success: token('success'),
         border: token('border'),
         input: token('input'),
         ring: token('ring'),

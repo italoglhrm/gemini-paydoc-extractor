@@ -44,7 +44,7 @@ frontend/
     hooks/      useExtraction.ts
     components/
       ui/       button badge card alert table progress skeleton
-                separator tooltip dropdown-menu
+                tooltip dropdown-menu
       Header  LanguageToggle  LogoIcon  UploadZone  DocumentPreview  PrivacyNote
       SamplePicker  ExtractActions  ResultSkeleton  ErrorAlert
       ResultPanel  OverallConfidence  ConfidenceGauge  ConfidenceLegend  FieldsTable
@@ -69,7 +69,7 @@ Tokens are CSS variables in `:root`, stored as HSL channels so opacity modifiers
 | `secondary` | `#F2F2F0` | secondary button surface (derived) | `foreground` on it 15.3:1 |
 | `destructive` | `#A32D2D` on soft `#FCEBEB` | errors; low confidence | 6.13:1 text on soft; white on `destructive` 7.07:1 |
 | `warning` | `#854F0B` on soft `#FAEEDA` | needs review; medium confidence | 5.87:1 |
-| `success` | `#3B6D11` on soft `#EAF3DE` | high confidence | 5.43:1 |
+| `success` | `#3B6D11` | high confidence | 6.21:1 on `card`, 5.90:1 on `background` |
 | `border`, `input` | `#E4E4E0` | hairlines | decorative, see below |
 | `ring` | `#534AB7` | focus indicator | |
 | `radius` | `0.5rem` | corners | |

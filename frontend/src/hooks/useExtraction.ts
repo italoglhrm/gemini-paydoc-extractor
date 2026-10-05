@@ -19,13 +19,13 @@ export type Status = 'idle' | 'ready' | 'extracting' | 'success' | 'error'
  * file replaces the drop zone, Remove and New document replace the preview, Cancel replaces itself.
  * `tick` changes on every request, so the same target can be requested twice in a row.
  */
-export interface FocusRequest {
+interface FocusRequest {
   target: 'extract' | 'zone'
   tick: number
 }
 
 /** What to announce to assistive technology: a dictionary key and its parameters. */
-export interface Announcement {
+interface Announcement {
   key: TranslationKey
   params?: TranslateParams
 }

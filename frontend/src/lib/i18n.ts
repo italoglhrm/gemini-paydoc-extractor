@@ -103,7 +103,7 @@ const en = {
   switchLanguage: 'Switch to Portuguese',
 } as const
 
-export type Dict = { [K in keyof typeof en]: string }
+type Dict = { [K in keyof typeof en]: string }
 export type TranslationKey = keyof Dict
 
 const pt: Dict = {
@@ -187,7 +187,7 @@ const pt: Dict = {
   switchLanguage: 'Mudar para inglês',
 }
 
-export const translations: Record<Lang, Dict> = { en, pt }
+const translations: Record<Lang, Dict> = { en, pt }
 
 export type TranslateParams = Record<string, string | number>
 

@@ -24,7 +24,7 @@ export interface DocumentData {
 }
 
 /** One 0.0-1.0 score per field. */
-export type FieldConfidence = Record<FieldName, number>
+type FieldConfidence = Record<FieldName, number>
 
 export interface ExtractResponse {
   document_type: DocumentType

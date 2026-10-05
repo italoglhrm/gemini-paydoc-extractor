@@ -1,7 +1,7 @@
 import { PolarAngleAxis, RadialBar, RadialBarChart } from 'recharts'
 
 /** Side of the square chart, in px. The placeholder ring in OverallConfidence has the same size. */
-export const GAUGE_SIZE = 96
+const GAUGE_SIZE = 96
 
 interface Props {
   /** 0 to 100. */
