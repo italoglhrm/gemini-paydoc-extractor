@@ -39,7 +39,7 @@ It is a portfolio project meant to show a complete slice of work with generative
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/not-found.png" width="420" alt="Receipt result with a missing field" /><br /><sub>A field the document does not have shows as Not found</sub></td>
-    <td align="center"><img src="docs/screenshots/low-quality.png" width="420" alt="Blurry invoice result" /><br /><sub>A degraded scan lowers the confidence (the total is misread here, see Limitations)</sub></td>
+    <td align="center"><img src="docs/screenshots/low-quality.png" width="420" alt="Blurry invoice result" /><br /><sub>A degraded scan lowers the confidence</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/error.png" width="420" alt="Unreachable API error" /><br /><sub>Clear error with retry when the API is unreachable</sub></td>
@@ -158,7 +158,7 @@ docs/screenshots/          # Images used in this README
 ### Limitations
 
 - **Privacy on the free tier.** On the Gemini free tier, Google may use submitted content to improve its products. Do not upload real or sensitive documents with a free key. The bundled samples are made up.
-- **Confidence is the model's own estimate**, not a calibrated probability. On the bundled blurry invoice, the model usually reads the total as 1,264.50 instead of 1,284.50 and reports 80% to 95% for the fields, which is above the 70% review threshold, so nothing is flagged. Use the score as a prompt to look, and check amounts that matter.
+- **Confidence is the model's own estimate**, not a calibrated probability. On the bundled blurry invoice, the model sometimes reads the total as 1,264.50 instead of 1,284.50 (in three of five test runs) and always reports 80% to 95% for the fields, which is above the 70% review threshold, so nothing is flagged. Use the score as a prompt to look, and check amounts that matter.
 - **Fixed scope.** One document per request, six fixed fields, no line items, and PDF, JPEG or PNG up to 10 MB (configurable).
 - **No auth and no storage.** The API has no authentication, so do not expose it publicly as it is. It is meant to run locally.
 - **PDF preview** uses the browser's built-in viewer, so how the page is framed depends on the browser.
@@ -263,7 +263,7 @@ O PayDoc Extractor lê documentos de pagamento com um modelo multimodal, em vez 
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/pt/not-found.png" width="420" alt="Resultado de um recibo com campo ausente" /><br /><sub>Um campo que o documento não tem aparece como Não encontrado</sub></td>
-    <td align="center"><img src="docs/screenshots/pt/low-quality.png" width="420" alt="Resultado de uma fatura desfocada" /><br /><sub>Uma digitalização ruim reduz a confiança (o total foi lido errado aqui, veja Limitações)</sub></td>
+    <td align="center"><img src="docs/screenshots/pt/low-quality.png" width="420" alt="Resultado de uma fatura desfocada" /><br /><sub>Uma digitalização ruim reduz a confiança</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/screenshots/pt/error.png" width="420" alt="Erro de API inacessível" /><br /><sub>Erro claro, com nova tentativa, quando a API está inacessível</sub></td>
@@ -382,7 +382,7 @@ docs/screenshots/          # Imagens usadas neste README
 ### Limitações
 
 - **Privacidade no plano gratuito.** No plano gratuito do Gemini, o Google pode usar o conteúdo enviado para melhorar seus produtos. Não envie documentos reais ou sensíveis com uma chave gratuita. Os exemplos incluídos são inventados.
-- **A confiança é uma estimativa do próprio modelo**, não uma probabilidade calibrada. Na fatura desfocada incluída, o modelo costuma ler o total como 1.264,50 em vez de 1.284,50 e informa de 80% a 95% para os campos, o que está acima do limite de revisão de 70%, então nada é sinalizado. Use a pontuação como um convite para conferir, e verifique os valores que importam.
+- **A confiança é uma estimativa do próprio modelo**, não uma probabilidade calibrada. Na fatura desfocada incluída, o modelo às vezes lê o total como 1.264,50 em vez de 1.284,50 (em três de cinco execuções de teste) e sempre informa de 80% a 95% para os campos, o que está acima do limite de revisão de 70%, então nada é sinalizado. Use a pontuação como um convite para conferir, e verifique os valores que importam.
 - **Escopo fixo.** Um documento por requisição, seis campos fixos, sem itens de linha, e PDF, JPEG ou PNG de até 10 MB (configurável).
 - **Sem autenticação e sem armazenamento.** A API não tem autenticação, então não a exponha publicamente como está. Ela foi pensada para rodar localmente.
 - **A prévia de PDF** usa o visualizador embutido do navegador, então o enquadramento da página depende do navegador.
