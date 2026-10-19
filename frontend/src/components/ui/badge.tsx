@@ -15,10 +15,10 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
-        // Added for this app: the "Review" flag on a field.
-        warning: "border-warning/30 bg-warning-soft text-warning",
-        // Added for this app: the Review flag on a low-confidence field.
-        danger: "border-destructive/30 bg-destructive-soft text-destructive",
+        // Added for this app: the "Review" flag on a field, a stamp pressed slightly off square.
+        warning: "-rotate-2 rounded-sm border-2 border-warning bg-transparent px-1.5 py-0 text-warning",
+        // Added for this app: the same stamp on a low-confidence field.
+        danger: "-rotate-2 rounded-sm border-2 border-destructive bg-transparent px-1.5 py-0 text-destructive",
       },
     },
     defaultVariants: {

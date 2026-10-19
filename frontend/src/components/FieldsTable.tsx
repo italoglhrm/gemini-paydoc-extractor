@@ -76,7 +76,7 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
 
   const valueOf = (row: Row) =>
     row.value === null ? (
-      <span className="text-muted-foreground">{t('notFound')}</span>
+      <span className="font-normal text-muted-foreground">{t('notFound')}</span>
     ) : (
       <>
         {row.value}
@@ -114,8 +114,8 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
                 data-level={levelAttr(row)}
                 data-flagged={row.flagged || undefined}
               >
-                <TableCell className="font-medium">{row.label}</TableCell>
-                <TableCell className="break-words">{valueOf(row)}</TableCell>
+                <TableCell className="text-muted-foreground">{row.label}</TableCell>
+                <TableCell className="break-words font-medium tabular-nums">{valueOf(row)}</TableCell>
                 <TableCell>
                   {row.value === null ? (
                     <span className="text-muted-foreground">—</span>

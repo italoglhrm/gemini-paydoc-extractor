@@ -51,7 +51,7 @@
 - [x] **F-T15** Document pane — *F1, F13, F16* · design FD3, FD4, FD13
   - The Desk background and the pane layout, the scanner-bed corner marks on the drop zone, the document sheet around the preview, and size and type shown as separate elements.
   - Done when: the drop zone keeps its keyboard and drag behavior, a chosen file shows on the sheet with no shadow and a thin edge, and the upload and sample browser checks still pass.
-- [ ] **F-T16** Result statement — *F4, F5, F14, F15, F16* · design FD7, FD13
+- [x] **F-T16** Result statement — *F4, F5, F14, F15, F16* · design FD7, FD13
   - The serif document-type heading with the heavy rule, the ruled fields table with tabular figures, the stamp-style Review label, and the gauge and legend restyled in the new tokens.
   - Done when: values, levels (the 69/70 and 89/90 boundaries), the Not found state and the flagged rows all match what they showed before, and the result, level and gauge checks pass.
 - [ ] **F-T17** Arrival motion — *F16* · design FD13
