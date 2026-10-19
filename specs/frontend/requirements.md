@@ -77,6 +77,7 @@ It adds no capability to the backend. It shows what `POST /extract` returns and 
 | -- | ----------- |
 | F11 | THE UI SHALL work from 360 px of width, be fully operable with a keyboard, and announce changes of state (extracting, done, failed) to assistive technology. |
 | F13 | THE UI SHALL take every color, radius and shadow from design tokens and build its components in the shadcn/ui style, with a restrained, professional appearance: one accent color, status colors only where they carry meaning, and text contrast of at least WCAG AA (4.5:1). |
+| F16 | THE UI SHALL have a visual identity drawn from the documents it reads: the document shown as a sheet and the result as a ruled statement, a serif and a sans typeface chosen for them, and a palette named by role. It SHALL spend its boldness in a few places and stay restrained elsewhere, and SHALL change no behavior and no other requirement. |
 
 ## Out of scope
 

@@ -45,21 +45,33 @@
 - [x] **F-T12** Overall confidence gauge — *F15* · design FD1, FD7
   - Recharts added, `ConfidenceGauge` loaded on demand, and `OverallConfidence` rebuilt around it with a same-size placeholder, the level word, an accessible label and reduced-motion handling.
   - Done when: the chart draws the percentage as an arc in its level's color with the number at its center, the number is readable text before and without the chart, a screen reader gets one label, motion is off for users who prefer reduced motion, and the chart code is a separate chunk fetched only after the first result.
+- [ ] **F-T14** Visual tokens and type — *F13, F16* · design FD2, FD13
+  - The Ledger palette in `index.css` and `tailwind.config.js` (HSL channels, same token names), the new radius, Source Serif 4 and IBM Plex Sans self-hosted through Fontsource with Inter and its package removed, tabular figures where FD2 says so, and the brand mark and favicon in Ledger blue.
+  - Done when: the tokens equal the FD2 table, the contrast script recomputed from the actual CSS reproduces the table, no color literal appears under `src/components`, no request goes to a font CDN, and `tsc` and the build pass.
+- [ ] **F-T15** Document pane — *F1, F13, F16* · design FD3, FD4, FD13
+  - The Desk background and the pane layout, the scanner-bed corner marks on the drop zone, the document sheet around the preview, and size and type shown as separate elements.
+  - Done when: the drop zone keeps its keyboard and drag behavior, a chosen file shows on the sheet with no shadow and a thin edge, and the upload and sample browser checks still pass.
+- [ ] **F-T16** Result statement — *F4, F5, F14, F15, F16* · design FD7, FD13
+  - The serif document-type heading with the heavy rule, the ruled fields table with tabular figures, the stamp-style Review label, and the gauge and legend restyled in the new tokens.
+  - Done when: values, levels (the 69/70 and 89/90 boundaries), the Not found state and the flagged rows all match what they showed before, and the result, level and gauge checks pass.
+- [ ] **F-T17** Arrival motion — *F16* · design FD13
+  - Rows resolve in a short stagger and the gauge sweeps when a result arrives, off under `prefers-reduced-motion`.
+  - Done when: the motion plays once per result, a reduced-motion browser shows the final state at once, and nothing moves while the user is typing, tabbing or scrolling.
 - [ ] **F-T13** End-to-end and visual verification — *F1-F11, F13-F15* · design FD12
   - The seven samples through the UI against the live API, error paths, both languages, 375 px, keyboard-only path, the contrast recomputation, and the screenshot review.
   - Done when: every sample matches its known answers in the UI, every FD12 check passes, and screenshots of both languages are kept for the README.
 
-The README (backend T12) follows this chain, once real screenshots exist.
+**Work order from here:** F-T14 to F-T17 (the visual reshape), then F-T13, which now verifies the reshaped UI and retakes the screenshots; the README images are replaced from those.
 
 ## Requirement coverage
 
 | Req | Tasks |
 | --- | ----- |
-| F1  | F-T6, F-T13 |
+| F1  | F-T6, F-T15, F-T13 |
 | F2  | F-T6, F-T13 |
 | F3  | F-T3, F-T9, F-T13 |
-| F4  | F-T8, F-T13 |
-| F5  | F-T8, F-T13 |
+| F4  | F-T8, F-T16, F-T13 |
+| F5  | F-T8, F-T16, F-T13 |
 | F6  | F-T3, F-T9, F-T13 |
 | F7  | F-T1, F-T4, F-T13 |
 | F8  | F-T6, F-T13 |
@@ -67,6 +79,7 @@ The README (backend T12) follows this chain, once real screenshots exist.
 | F10 | F-T6, F-T13 |
 | F11 | F-T5, F-T6, F-T9, F-T13 |
 | F12 | withdrawn (F-T10 removes the JSON view) |
-| F13 | F-T1, F-T2, F-T5, F-T8, F-T11, F-T12, F-T13 |
-| F14 | F-T11, F-T13 |
-| F15 | F-T12, F-T13 |
+| F13 | F-T1, F-T2, F-T5, F-T8, F-T11, F-T12, F-T14, F-T15, F-T13 |
+| F14 | F-T11, F-T16, F-T13 |
+| F15 | F-T12, F-T16, F-T13 |
+| F16 | F-T14, F-T15, F-T16, F-T17, F-T13 |
