@@ -2,6 +2,8 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+// Changed from the shadcn source for this app: no shadow. The statement is told apart from the
+// desk by its edge and the paper-on-desk contrast.
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -9,49 +11,13 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow-sm",
+      "rounded-lg border bg-card text-card-foreground",
       className
     )}
     {...props}
   />
 ))
 Card.displayName = "Card"
-
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-))
-CardHeader.displayName = "CardHeader"
-
-const CardTitle = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
-    {...props}
-  />
-))
-CardTitle.displayName = "CardTitle"
-
-const CardDescription = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-))
-CardDescription.displayName = "CardDescription"
 
 const CardContent = React.forwardRef<
   HTMLDivElement,
@@ -61,4 +27,4 @@ const CardContent = React.forwardRef<
 ))
 CardContent.displayName = "CardContent"
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent }
+export { Card, CardContent }

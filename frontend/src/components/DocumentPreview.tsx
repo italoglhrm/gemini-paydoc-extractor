@@ -24,7 +24,8 @@ export function DocumentPreview({ file, onRemove }: Props) {
 
   return (
     <div className="space-y-3">
-      <div className="overflow-hidden rounded-lg border bg-muted">
+      {/* The sheet: paper on the desk, an edge and no shadow. */}
+      <div className="overflow-hidden rounded-sm border bg-card">
         {url &&
           (isPdf(file) ? (
             // Open parameters for the browser's PDF viewer: no toolbar or side panel, page fitted to the
@@ -44,7 +45,7 @@ export function DocumentPreview({ file, onRemove }: Props) {
               </div>
             </object>
           ) : (
-            <img src={url} alt={file.name} className="max-h-80 w-full object-contain" />
+            <img src={url} alt={file.name} className="max-h-80 w-full object-contain p-3" />
           ))}
         {!url && <div className="h-80" />}
       </div>
@@ -55,8 +56,9 @@ export function DocumentPreview({ file, onRemove }: Props) {
           <p className="truncate text-sm font-medium" title={file.name}>
             {file.name}
           </p>
-          <p className="text-xs text-muted-foreground">
-            {formatFileSize(file.size, locale)} · {fileTypeLabel(file)}
+          <p className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="tabular-nums">{formatFileSize(file.size, locale)}</span>
+            <span className="rounded-sm border px-1.5 text-[11px] font-medium leading-4">{fileTypeLabel(file)}</span>
           </p>
         </div>
         <Button variant="ghost" size="icon" onClick={onRemove} aria-label={t('removeFile')}>

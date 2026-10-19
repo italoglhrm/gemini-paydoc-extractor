@@ -8,7 +8,7 @@ import { ResultPanel } from '@/components/ResultPanel'
 import { ResultSkeleton } from '@/components/ResultSkeleton'
 import { SamplePicker } from '@/components/SamplePicker'
 import { UploadZone } from '@/components/UploadZone'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext'
 import { useExtraction } from '@/hooks/useExtraction'
@@ -46,53 +46,59 @@ function Shell() {
       <Header />
 
       <main id="main" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-        <div className="mb-8 space-y-2">
-          <h1 className="text-balance text-2xl font-semibold tracking-tight">{t('introTitle')}</h1>
+        <div className="mb-10 space-y-2">
+          <h1 className="text-balance font-serif text-2xl font-semibold tracking-tight sm:text-[28px] sm:leading-9">
+            {t('introTitle')}
+          </h1>
           <p className="max-w-2xl text-balance text-sm text-muted-foreground">{t('introSubtitle')}</p>
         </div>
 
-        {/* Two columns from lg, stacked below it, Document first. */}
-        <div className="grid gap-6 lg:grid-cols-12">
-          <Card className="lg:col-span-5">
-            <CardHeader>
-              <CardTitle>{t('documentTitle')}</CardTitle>
-              <CardDescription>{t('documentDescription')}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {flow.file ? (
-                <DocumentPreview file={flow.file} onRemove={flow.removeFile} />
-              ) : (
-                <UploadZone onFile={flow.selectFile} problem={flow.problem} />
-              )}
-              <SamplePicker onSample={flow.selectFile} />
-              <PrivacyNote />
-              <ExtractActions
-                status={flow.status}
-                onExtract={() => void flow.extract()}
-                onCancel={flow.cancel}
-                onNew={flow.removeFile}
-              />
-            </CardContent>
-          </Card>
+        {/* Two columns from lg, stacked below it, Document first. The document lies on the desk; the result is a sheet. */}
+        <div className="grid gap-x-8 gap-y-10 lg:grid-cols-12">
+          <section aria-labelledby="document-title" className="space-y-4 lg:col-span-5">
+            <div className="space-y-1 lg:min-h-12">
+              <h2 id="document-title" className="font-semibold leading-6 tracking-tight">
+                {t('documentTitle')}
+              </h2>
+              <p className="text-sm text-muted-foreground">{t('documentDescription')}</p>
+            </div>
+            {flow.file ? (
+              <DocumentPreview file={flow.file} onRemove={flow.removeFile} />
+            ) : (
+              <UploadZone onFile={flow.selectFile} problem={flow.problem} />
+            )}
+            <SamplePicker onSample={flow.selectFile} />
+            <PrivacyNote />
+            <ExtractActions
+              status={flow.status}
+              onExtract={() => void flow.extract()}
+              onCancel={flow.cancel}
+              onNew={flow.removeFile}
+            />
+          </section>
 
-          <Card className="lg:col-span-7">
-            <CardHeader>
-              <CardTitle>{t('resultTitle')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {flow.status === 'success' && flow.result ? (
-                <ResultPanel key={flow.runId} result={flow.result} />
-              ) : flow.status === 'extracting' ? (
-                <ResultSkeleton />
-              ) : flow.status === 'error' && flow.error ? (
-                <ErrorAlert error={flow.error} />
-              ) : (
-                <p className="py-12 text-center text-sm text-muted-foreground">
-                  {flow.status === 'ready' ? t('resultReady') : t('resultEmpty')}
-                </p>
-              )}
-            </CardContent>
-          </Card>
+          <section aria-labelledby="result-title" className="space-y-4 lg:col-span-7">
+            <div className="lg:min-h-12">
+              <h2 id="result-title" className="font-semibold leading-6 tracking-tight">
+                {t('resultTitle')}
+              </h2>
+            </div>
+            <Card>
+              <CardContent className="p-6">
+                {flow.status === 'success' && flow.result ? (
+                  <ResultPanel key={flow.runId} result={flow.result} />
+                ) : flow.status === 'extracting' ? (
+                  <ResultSkeleton />
+                ) : flow.status === 'error' && flow.error ? (
+                  <ErrorAlert error={flow.error} />
+                ) : (
+                  <p className="py-12 text-center text-sm text-muted-foreground">
+                    {flow.status === 'ready' ? t('resultReady') : t('resultEmpty')}
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </section>
         </div>
       </main>
 

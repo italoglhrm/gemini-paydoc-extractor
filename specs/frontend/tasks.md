@@ -48,7 +48,7 @@
 - [x] **F-T14** Visual tokens and type — *F13, F16* · design FD2, FD13
   - The Ledger palette in `index.css` and `tailwind.config.js` (HSL channels, same token names), the new radius, Source Serif 4 and IBM Plex Sans self-hosted through Fontsource with Inter and its package removed, tabular figures where FD2 says so, and the brand mark and favicon in Ledger blue.
   - Done when: the tokens equal the FD2 table, the contrast script recomputed from the actual CSS reproduces the table, no color literal appears under `src/components`, no request goes to a font CDN, and `tsc` and the build pass.
-- [ ] **F-T15** Document pane — *F1, F13, F16* · design FD3, FD4, FD13
+- [x] **F-T15** Document pane — *F1, F13, F16* · design FD3, FD4, FD13
   - The Desk background and the pane layout, the scanner-bed corner marks on the drop zone, the document sheet around the preview, and size and type shown as separate elements.
   - Done when: the drop zone keeps its keyboard and drag behavior, a chosen file shows on the sheet with no shadow and a thin edge, and the upload and sample browser checks still pass.
 - [ ] **F-T16** Result statement — *F4, F5, F14, F15, F16* · design FD7, FD13
