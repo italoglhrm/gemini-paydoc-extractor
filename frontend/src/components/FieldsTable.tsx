@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { ConfidenceLegend } from '@/components/ConfidenceLegend'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -43,6 +44,9 @@ function display(name: FieldName, data: DocumentData, locale: string, unknownCur
     }
   }
 }
+
+/** Row i starts 40 ms after row i - 1: see `.row-in` in index.css. */
+const stagger = (index: number) => ({ '--i': index }) as CSSProperties
 
 /** Bar and percentage, both in the color of the score's level. */
 function ConfidenceBar({ row, locale, levelName }: { row: Row; locale: string; levelName: string }) {
@@ -107,12 +111,14 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <TableRow
                 key={row.name}
                 data-field={row.name}
                 data-level={levelAttr(row)}
                 data-flagged={row.flagged || undefined}
+                className="row-in"
+                style={stagger(index)}
               >
                 <TableCell className="text-muted-foreground">{row.label}</TableCell>
                 <TableCell className="break-words font-medium tabular-nums">{valueOf(row)}</TableCell>
@@ -134,13 +140,14 @@ export function FieldsTable({ result }: { result: ExtractResponse }) {
       </div>
 
       <ul className="divide-y sm:hidden" data-layout="list">
-        {rows.map((row) => (
+        {rows.map((row, index) => (
           <li
             key={row.name}
             data-field={row.name}
             data-level={levelAttr(row)}
             data-flagged={row.flagged || undefined}
-            className="space-y-1.5 py-3 first:pt-0 last:pb-0"
+            className="row-in space-y-1.5 py-3 first:pt-0 last:pb-0"
+            style={stagger(index)}
           >
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs text-muted-foreground">{row.label}</span>

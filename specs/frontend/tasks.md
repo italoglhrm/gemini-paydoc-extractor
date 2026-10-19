@@ -54,7 +54,7 @@
 - [x] **F-T16** Result statement — *F4, F5, F14, F15, F16* · design FD7, FD13
   - The serif document-type heading with the heavy rule, the ruled fields table with tabular figures, the stamp-style Review label, and the gauge and legend restyled in the new tokens.
   - Done when: values, levels (the 69/70 and 89/90 boundaries), the Not found state and the flagged rows all match what they showed before, and the result, level and gauge checks pass.
-- [ ] **F-T17** Arrival motion — *F16* · design FD13
+- [x] **F-T17** Arrival motion — *F16* · design FD13
   - Rows resolve in a short stagger and the gauge sweeps when a result arrives, off under `prefers-reduced-motion`.
   - Done when: the motion plays once per result, a reduced-motion browser shows the final state at once, and nothing moves while the user is typing, tabbing or scrolling.
 - [ ] **F-T13** End-to-end and visual verification — *F1-F11, F13-F15* · design FD12
