@@ -26,7 +26,7 @@ Upload an invoice, boleto, receipt or waybill and get its data back as structure
 
 ### About
 
-PayDoc Extractor reads payment documents with a multimodal model instead of OCR rules. You send one PDF or image, Gemini classifies it (invoice, boleto, receipt, waybill, or unknown), pulls out six fields (vendor, document number, issue date, due date, total amount, currency), and scores how clearly each one was stated. The API then computes an overall confidence and lists the fields that deserve a human look.
+PayDoc Extractor reads payment documents with a multimodal model. You send one PDF or image, Gemini classifies it (invoice, boleto, receipt, waybill, or unknown), pulls out six fields (vendor, document number, issue date, due date, total amount, currency), and scores how clearly each one was stated. The API then computes an overall confidence and lists the fields that deserve a human look.
 
 It is a portfolio project meant to show a complete slice of work with generative AI in an application: schema-constrained model output, a prompt written against confidently wrong answers, confidence handled by the application instead of trusted blindly, a typed React client, and a bilingual interface. It was built spec-first, and the requirements, design and task lists are in [`specs/`](specs). Nothing is stored: the file goes to the model and the result goes back to the browser.
 
@@ -250,7 +250,7 @@ The [`samples/`](samples) folder lists the expected values for each document.
 
 ### Sobre
 
-O PayDoc Extractor lê documentos de pagamento com um modelo multimodal, em vez de regras de OCR. Você envia um PDF ou uma imagem, o Gemini classifica o documento (fatura, boleto, recibo, conhecimento de transporte ou desconhecido), extrai seis campos (fornecedor, número do documento, data de emissão, vencimento, valor total e moeda) e avalia o quão claramente cada um estava escrito. A API então calcula uma confiança geral e lista os campos que merecem uma conferência humana.
+O PayDoc Extractor lê documentos de pagamento com um modelo multimodal. Você envia um PDF ou uma imagem, o Gemini classifica o documento (fatura, boleto, recibo, conhecimento de transporte ou desconhecido), extrai seis campos (fornecedor, número do documento, data de emissão, vencimento, valor total e moeda) e avalia o quão claramente cada um estava escrito. A API então calcula uma confiança geral e lista os campos que merecem uma conferência humana.
 
 É um projeto de portfólio, pensado para demonstrar uma fatia completa de trabalho com IA generativa em uma aplicação: saída do modelo restrita por schema, um prompt escrito contra respostas erradas com confiança alta, confiança tratada pela aplicação em vez de aceita às cegas, um cliente React tipado e uma interface bilíngue. Foi construído começando pelas especificações, e os requisitos, o design e as listas de tarefas estão em [`specs/`](specs). Nada é armazenado: o arquivo vai para o modelo e o resultado volta para o navegador.
 

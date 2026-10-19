@@ -1,5 +1,3 @@
-"""Prompts. Kept apart from the client so they can be read and tuned on their own."""
-
 SYSTEM_PROMPT = """\
 You extract structured data from payment documents (invoices, boletos, receipts, waybills).
 You receive one document as a PDF or image and answer with JSON matching the provided schema.
