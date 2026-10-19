@@ -21,7 +21,8 @@ export function OverallConfidence({ score }: { score: number }) {
   const levelName = t(style.label)
 
   return (
-    <div className="flex items-center gap-4">
+    // ml-auto keeps the gauge on the right when the row wraps below the heading on a narrow screen.
+    <div className="ml-auto flex items-center gap-4">
       <div className="text-right">
         <p className="text-xs text-muted-foreground">{t('overallConfidence')}</p>
         <p data-gauge-level className={cn('text-sm font-semibold', style.text)}>
