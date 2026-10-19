@@ -37,7 +37,8 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['"Inter Variable"', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['"IBM Plex Sans Variable"', 'system-ui', 'sans-serif'],
+        serif: ['"Source Serif 4 Variable"', 'Georgia', 'serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
     },

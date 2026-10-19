@@ -45,7 +45,7 @@
 - [x] **F-T12** Overall confidence gauge — *F15* · design FD1, FD7
   - Recharts added, `ConfidenceGauge` loaded on demand, and `OverallConfidence` rebuilt around it with a same-size placeholder, the level word, an accessible label and reduced-motion handling.
   - Done when: the chart draws the percentage as an arc in its level's color with the number at its center, the number is readable text before and without the chart, a screen reader gets one label, motion is off for users who prefer reduced motion, and the chart code is a separate chunk fetched only after the first result.
-- [ ] **F-T14** Visual tokens and type — *F13, F16* · design FD2, FD13
+- [x] **F-T14** Visual tokens and type — *F13, F16* · design FD2, FD13
   - The Ledger palette in `index.css` and `tailwind.config.js` (HSL channels, same token names), the new radius, Source Serif 4 and IBM Plex Sans self-hosted through Fontsource with Inter and its package removed, tabular figures where FD2 says so, and the brand mark and favicon in Ledger blue.
   - Done when: the tokens equal the FD2 table, the contrast script recomputed from the actual CSS reproduces the table, no color literal appears under `src/components`, no request goes to a font CDN, and `tsc` and the build pass.
 - [ ] **F-T15** Document pane — *F1, F13, F16* · design FD3, FD4, FD13
